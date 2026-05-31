@@ -434,7 +434,7 @@
       transform: translateY(-4px);
     }
 
-    /* Scrollbar with scroll-driven gradient */
+    /* Scrollbar gradient: blue at top of page → gold at bottom */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -448,7 +448,7 @@
         #fbbf24
       );
       border-radius: 4px;
-      background-size: 100% 300%;
+      background-size: 100% 200%;
       background-position: 0 var(--scroll-gradient, 0%);
       transition: background-position 0.1s linear;
     }
@@ -748,8 +748,8 @@
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollProgress = scrollHeight > 0 ? (scrollTop / scrollHeight) : 0;
 
-      // Map scroll 0-1 to a nice slow gradient movement (0% to ~180%)
-      const gradientPos = Math.round(scrollProgress * 180);
+      // Map scroll progress so the thumb is blue at top of page and gold at bottom
+      const gradientPos = Math.round(scrollProgress * 100);
       document.documentElement.style.setProperty('--scroll-gradient', `${gradientPos}%`);
     }
 
