@@ -402,48 +402,38 @@
                   box-shadow 0.4s ease;
     }
 
-    /* Dual-layer subtle sine-wave shimmer (light blue + gold, opposite rotation) */
+    /* Subtle radiating flow around headshot (very faint breathing glow) */
     .headshot::before,
     .headshot::after {
       content: '';
       position: absolute;
-      inset: 0;
+      inset: -28%;
       border-radius: 50%;
       pointer-events: none;
       mix-blend-mode: screen;
-      opacity: 0.42;
+      opacity: 0.28;
     }
 
     .headshot::before {
-      /* Light blue layer - clockwise */
-      background: repeating-linear-gradient(
-        42deg,
-        transparent 0,
-        transparent 16px,
-        rgba(79, 195, 247, 0.32) 18px,
-        rgba(79, 195, 247, 0.32) 34px,
-        transparent 36px
+      /* Light blue radiating layer */
+      background: radial-gradient(
+        circle at center,
+        rgba(79, 195, 247, 0.22) 0%,
+        rgba(79, 195, 247, 0.09) 38%,
+        transparent 68%
       );
-      background-size: 130% 130%;
-      animation: 
-        rotate-clockwise 38s linear infinite,
-        wave-drift 14s ease-in-out infinite;
+      animation: radiate-blue 9.5s ease-in-out infinite;
     }
 
     .headshot::after {
-      /* Gold layer - counter-clockwise */
-      background: repeating-linear-gradient(
-        138deg,
-        transparent 0,
-        transparent 16px,
-        rgba(251, 191, 36, 0.30) 18px,
-        rgba(251, 191, 36, 0.30) 34px,
-        transparent 36px
+      /* Gold radiating layer - slight phase offset */
+      background: radial-gradient(
+        circle at center,
+        rgba(251, 191, 36, 0.20) 0%,
+        rgba(251, 191, 36, 0.07) 38%,
+        transparent 68%
       );
-      background-size: 130% 130%;
-      animation: 
-        rotate-counter 44s linear infinite,
-        wave-drift 16s ease-in-out infinite reverse;
+      animation: radiate-gold 11s ease-in-out infinite 2.8s;
     }
 
     .headshot:hover {
@@ -454,19 +444,14 @@
         0 0 90px rgba(79,195,247,0.18);
     }
 
-    @keyframes rotate-clockwise {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+    @keyframes radiate-blue {
+      0%, 100% { transform: scale(0.78); opacity: 0.22; }
+      50% { transform: scale(1.32); opacity: 0.38; }
     }
 
-    @keyframes rotate-counter {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(-360deg); }
-    }
-
-    @keyframes wave-drift {
-      0%, 100% { background-position: 0% 0%; }
-      50%      { background-position: 22% 18%; }
+    @keyframes radiate-gold {
+      0%, 100% { transform: scale(0.82); opacity: 0.18; }
+      50% { transform: scale(1.26); opacity: 0.35; }
     }
 
     .card {
