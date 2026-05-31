@@ -182,13 +182,26 @@
     }
 
     .bio-section a {
+      position: relative;
       color: #4fc3f7;
       text-decoration: none;
-      border-bottom: 1px solid rgba(79,195,247,0.32);
-      transition: border-color 0.2s;
+      border-bottom: none;
     }
 
-    .bio-section a:hover { border-color: #4fc3f7; }
+    .bio-section a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #4fc3f7;
+      transition: width 0.3s ease;
+    }
+
+    .bio-section a:hover::after {
+      width: 100%;
+    }
 
     .bio-accent {
       border-left: 3px solid rgba(79,195,247,0.48);
@@ -385,6 +398,70 @@
       transform: translateY(-4px);
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .card::before {
+        animation: none;
+        background: linear-gradient(90deg, #4fc3f7 0%, transparent 100%);
+      }
+      .headshot, .card {
+        transition: none;
+      }
+    }
+
+    /* === Immutable QC Project Highlight (per Kimi feedback) === */
+    .project-highlight {
+      border-left-color: rgba(251, 191, 36, 0.6);
+      background: rgba(251, 191, 36, 0.04);
+      position: relative;
+    }
+
+    .project-highlight::before {
+      content: 'Current Project';
+      position: absolute;
+      top: -10px;
+      left: 22px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fbbf24;
+      background: #0b1628;
+      padding: 0 6px;
+    }
+
+    .project-highlight strong {
+      color: #fbbf24;
+    }
+
+    .project-links {
+      display: block;
+      margin-top: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    .project-links a {
+      color: rgba(255, 255, 255, 0.6);
+      border-bottom: 1px solid rgba(79, 195, 247, 0.2);
+      margin-right: 8px;
+    }
+
+    .project-links a:hover {
+      color: #4fc3f7;
+      border-color: #4fc3f7;
+    }
+
+    .project-links i {
+      font-size: 9px;
+      margin-right: 4px;
+    }
+
 @media (max-width: 768px) {
   .hero { padding: 30px 0 10px; }
   .headshot { width: 120px; height: 120px; margin-bottom: 14px; }
@@ -466,11 +543,13 @@
       <p class="bio-accent">
         My work sits at the intersection of complex wet chemistry and regulatory compliance, with deep expertise in <strong>NADCAP, cGMP, EPA, NELAC, and USP</strong> standards. Currently, I apply this expertise at <strong>Collins Aerospace, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business</strong>, within the <strong>Landing Systems</strong> division.
       </p>
-      <p>
-        In parallel, I am building <a href="https://immutableqc.com" target="_blank" rel="noopener"><strong>Immutable QC</strong></a> — a platform for cryptographically verifiable data integrity from analytical instruments, featuring direct ECDSA signing at the source, hash-chained audit trails, and on-chain attestations.
-      </p>
-      <p>
-        <strong><a href="https://github.com/fabreu08/immutable.polsia.app" target="_blank" rel="noopener">Production Code</a></strong>, <strong><a href="https://github.com/fabreu08/IQC-ui-ux-review" target="_blank" rel="noopener">Research &amp; Auditing</a></strong>, and <strong><a href="https://github.com/fabreu08/IQC-token-research" target="_blank" rel="noopener">Token Research</a></strong> are open for 3rd party review.
+      <p class="bio-accent project-highlight">
+        Building <a href="https://immutableqc.com" target="_blank" rel="noopener"><strong>Immutable QC</strong></a> — infrastructure for cryptographically-verifiable laboratory data integrity. Direct instrument integration, tamper-evident audit trails, and regulatory-ready documentation for 21 CFR Part 11 and ISO 17025 environments.
+        <span class="project-links">
+          <a href="https://github.com/fabreu08/immutable.polsia.app" target="_blank" rel="noopener"><i class="fab fa-github"></i> Production</a> · 
+          <a href="https://github.com/fabreu08/IQC-ui-ux-review" target="_blank" rel="noopener"><i class="fab fa-github"></i> Research</a> · 
+          <a href="https://github.com/fabreu08/IQC-token-research" target="_blank" rel="noopener"><i class="fab fa-github"></i> Token</a>
+        </span>
       </p>
       <p>
         From overseeing wastewater analysis for municipal clients to conducting <strong>disinfectant validation studies</strong> and environmental monitoring of <strong>ISO 4 cleanrooms</strong> in sterile drug manufacturing, my approach has remained consistent: ensure audit-readiness through <strong>data integrity, traceability, and defensibility</strong>. I am driven by environments where technical precision has direct consequences for safety and operational success, and I remain committed to applying this disciplined methodology to the most demanding challenges in <strong>water management</strong>, <strong>pharmaceutical science</strong>, and <strong>aerospace engineering</strong>.
