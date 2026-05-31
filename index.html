@@ -349,6 +349,42 @@
       color: rgba(255,255,255,0.22);
     }
 
+    /* === Subtle animations === */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-number {
+      transition: all 0.3s ease;
+    }
+
+    .headshot {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                  box-shadow 0.4s ease;
+    }
+    .headshot:hover {
+      transform: scale(1.04);
+      box-shadow: 
+        0 0 0 7px rgba(79,195,247,0.12),
+        0 0 48px rgba(79,195,247,0.35),
+        0 0 90px rgba(79,195,247,0.18);
+    }
+
+    .card {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.3s, background 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
 @media (max-width: 768px) {
   .hero { padding: 30px 0 10px; }
   .headshot { width: 120px; height: 120px; margin-bottom: 14px; }
@@ -428,7 +464,12 @@
         I am a Master's-level Scientist and Compliance Lead with over a decade of experience supporting and overseeing high-volume, regulated laboratory operations across <strong>environmental enforcement</strong>, <strong>pharmaceutical validation</strong>, and <strong>aerospace manufacturing</strong>.
       </p>
       <p class="bio-accent">
-        My work sits at the intersection of complex wet chemistry and regulatory compliance, with deep expertise in <strong>NADCAP, cGMP, EPA, NELAC, and USP</strong> standards. Currently, I apply this expertise at <strong>Collins Aerospace, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business</strong>, within the <strong>Landing Systems</strong> division, where I provide analytical and compliance support for defense systems developed by one of the world's largest aerospace and defense organizations. Our laboratory holds <strong>NADCAP Gold Certification</strong>, reflecting the level of quality systems and process control this work demands.
+        My work sits at the intersection of complex wet chemistry and regulatory compliance, with deep expertise in <strong>NADCAP, cGMP, EPA, NELAC, and USP</strong> standards. Currently, I apply this expertise at <strong>Collins Aerospace, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business</strong>, within the <strong>Landing Systems</strong> division.
+      </p>
+      <p>
+        In parallel, I am building <a href="https://alpha.immutableqc.com" target="_blank" rel="noopener"><strong>Immutable QC</strong></a> — a platform for cryptographically verifiable data integrity from analytical instruments, featuring direct ECDSA signing at the source, hash-chained audit trails, and on-chain attestations. The research and early implementation are open:
+        <a href="https://github.com/neodimiun/immutable-qc-mvp" target="_blank" rel="noopener">Product MVP</a> ·
+        <a href="https://github.com/fabreu08/IQC-ui-ux-review" target="_blank" rel="noopener">Research &amp; Auditing</a>.
       </p>
       <p>
         From overseeing wastewater analysis for municipal clients to conducting <strong>disinfectant validation studies</strong> and environmental monitoring of <strong>ISO 4 cleanrooms</strong> in sterile drug manufacturing, my approach has remained consistent: ensure audit-readiness through <strong>data integrity, traceability, and defensibility</strong>. I am driven by environments where technical precision has direct consequences for safety and operational success, and I remain committed to applying this disciplined methodology to the most demanding challenges in <strong>water management</strong>, <strong>pharmaceutical science</strong>, and <strong>aerospace engineering</strong>.
@@ -494,6 +535,66 @@
     </div>
     <p class="footer-copy">&copy; 2026 Jose A. Fernandez Abreu &middot; joseqc.com</p>
   </footer>
+
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.bio-section, .cards-section, .standards-section').forEach(el => {
+      el.classList.add('fade-in');
+      observer.observe(el);
+    });
+
+    // Animated stat counters
+    function animateValue(el, start, end, duration) {
+      const range = end - start;
+      let startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const value = Math.floor(start + range * progress);
+        if (el.textContent.includes('+')) {
+          el.textContent = value + '+';
+        } else {
+          el.textContent = value;
+        }
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          if (el.textContent.includes('+')) el.textContent = end + '+';
+        }
+      }
+      window.requestAnimationFrame(step);
+    }
+
+    const stats = document.querySelectorAll('.stat-number');
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          stats.forEach(stat => {
+            const text = stat.textContent.trim();
+            if (text === '10+') {
+              animateValue(stat, 0, 10, 1200);
+            } else if (text === '3') {
+              animateValue(stat, 0, 3, 900);
+            }
+          });
+          statsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.6 });
+
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) statsObserver.observe(statsBar);
+  </script>
 
 </body>
 </html>
