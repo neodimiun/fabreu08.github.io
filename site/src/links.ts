@@ -1,7 +1,8 @@
 export const LINKS = {
   email: "jose@joseqc.com",
   mailto: "mailto:jose@joseqc.com",
+  phone: "786-371-6832",
+  tel: "tel:7863716832",
   linkedin: "https://www.linkedin.com/in/jf42/",
-  github: "https://github.com/fabreu08",
-  cv: "https://drive.google.com/file/d/1FQXbq30I5GoH5onZDLqftWZvv_B0Z43d/view",
+  linkedinLabel: "linkedin.com/in/jf42",
 } as const

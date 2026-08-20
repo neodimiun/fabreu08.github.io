@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
-import { LINKS } from "../links"
 
 const NAV = [
-  { label: "Path", href: "#path" },
-  { label: "Lab", href: "#lab" },
-  { label: "Work", href: "#work" },
-  { label: "CV", href: LINKS.cv, external: true },
+  { label: "Path & Work", href: "#path" },
+  { label: "Lab Methods", href: "#lab" },
+  { label: "Credentials", href: "#credentials" },
+  { label: "Contact", href: "#contact" },
 ] as const
 
 export function Navbar() {
@@ -34,38 +33,17 @@ export function Navbar() {
             className="text-[21px] sm:text-[26px] tracking-tight text-black"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            José
+            Jose
           </span>
         </a>
 
-        <div className="hidden md:flex flex-row items-center gap-x-[0.7em] text-[23px] text-black">
-          {NAV.map((item, i) => {
-            const label = i < NAV.length - 1 ? `${item.label},` : item.label
-            const cls = "hover:opacity-60 transition-opacity"
-            return "external" in item && item.external ? (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cls}
-              >
-                {label}
-              </a>
-            ) : (
-              <a key={item.label} href={item.href} className={cls}>
-                {label}
-              </a>
-            )
-          })}
+        <div className="hidden md:flex flex-row items-center gap-x-[0.7em] text-[17px] lg:text-[20px] text-black">
+          {NAV.map((item, i) => (
+            <a key={item.label} href={item.href} className="hover:opacity-60 transition-opacity">
+              {i < NAV.length - 1 ? `${item.label},` : item.label}
+            </a>
+          ))}
         </div>
-
-        <a
-          href={LINKS.mailto}
-          className="hidden md:inline text-[23px] text-black underline underline-offset-2 hover:opacity-60 transition-opacity"
-        >
-          Get in touch
-        </a>
 
         <button
           type="button"
@@ -97,36 +75,16 @@ export function Navbar() {
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        {NAV.map((item) =>
-          "external" in item && item.external ? (
-            <a
-              key={item.label}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[32px] font-medium"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </a>
-          ) : (
-            <a
-              key={item.label}
-              href={item.href}
-              className="text-[32px] font-medium"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </a>
-          ),
-        )}
-        <a
-          href={LINKS.mailto}
-          className="text-[32px] font-medium underline underline-offset-2"
-          onClick={() => setOpen(false)}
-        >
-          Get in touch
-        </a>
+        {NAV.map((item) => (
+          <a
+            key={item.label}
+            href={item.href}
+            className="text-[32px] font-medium"
+            onClick={() => setOpen(false)}
+          >
+            {item.label}
+          </a>
+        ))}
       </div>
     </>
   )
