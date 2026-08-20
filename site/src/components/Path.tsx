@@ -50,7 +50,7 @@ const ENTRIES: Entry[] = [
   {
     title: "Collins Aerospace · Chemical Process Laboratory",
     meta: "Opa-Locka, FL · 2025–2026",
-    body: "The deliberate turn. Everywhere else the solution in front of me was the sample. Here it is the tool: a bath whose concentration decides whether a landing gear component is airworthy. Tested process solutions against specification and control schedule, trended critical parameters, issued make-up and dilution sheets (T14, T15, T19), and evaluated trivalent chromium and iron after dummying. Owned the TrueChem record, calibration and standards, and controlled documents. Supported Nadcap, customer, and internal audits. Held stop-work authority on specification violations, and used it.",
+    body: "The deliberate turn. Everywhere else the solution in front of me was the sample. Here it is the tool: a bath whose concentration decides whether a landing gear component is airworthy. Tested process solutions against specification and control schedule, trended critical parameters, and evaluated trivalent chromium and iron after dummying. Owned the TrueChem record, calibration and standards, and controlled documents. Supported Nadcap, customer, and internal audits. Held stop-work authority on specification violations, and used it.",
   },
   {
     title: "Collins Aerospace · Senior Engineer, Materials & Process Technologies",

@@ -11,7 +11,7 @@ const GROUPS: { title: string; body: ReactNode }[] = [
   },
   {
     title: "Process solution control",
-    body: "Routine and ad-hoc chemical and physical testing of process solutions to specification, work instruction, and control schedule. Critical-parameter trending against shop limits, make-up and dilution sheets (T14, T15, T19), trivalent chromium and iron trending after dummying, reagent and consumable shelf-life control, full traceability in TrueChem.",
+    body: "Routine and ad-hoc chemical and physical testing of process solutions to specification, work instruction, and control schedule. Critical-parameter trending against shop limits, trivalent chromium and iron trending after dummying, reagent and consumable shelf-life control, full traceability in TrueChem.",
   },
   {
     title: "Nutrients",
