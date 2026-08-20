@@ -3,287 +3,286 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JFA˚ — Materials &amp; Process Technology</title>
-  <meta name="description" content="José A. Fernández Abreu, M.S. — M&amp;PT Engineer at Collins Aerospace Landing Systems." />
+  <title>José A. Fernández Abreu — M&amp;PT Engineer</title>
+  <meta name="description" content="José A. Fernández Abreu, M.S. — Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Michroma&family=Orbitron:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --pad-x: clamp(1.25rem, 4.5vw, 5rem);
-      --pad-y: clamp(1rem, 3vh, 4rem);
-      --header-pt: clamp(1.25rem, 2.5vh, 2.5rem);
-      --gap-nav: clamp(1rem, 2.2vw, 2.25rem);
-      --logo: clamp(1.35rem, 1.2vw + 0.9rem, 2.1rem);
-      --logo-deg: clamp(0.65rem, 0.4vw + 0.45rem, 0.9rem);
-      --nav: clamp(0.65rem, 0.35vw + 0.5rem, 0.875rem);
-      --headline: clamp(2.15rem, 4.5vw + 0.75rem, 5.25rem);
-      --body: clamp(0.7rem, 0.35vw + 0.55rem, 0.9rem);
-      --micro: clamp(0.55rem, 0.25vw + 0.45rem, 0.7rem);
-      --btn-px: clamp(1.15rem, 1.4vw, 1.75rem);
-      --btn-py: clamp(0.6rem, 0.9vh, 0.85rem);
-      --feature-pad: clamp(1rem, 1.5vw, 1.75rem);
-      --feature-min: clamp(13rem, 18vw, 20rem);
-      --globe: clamp(2.25rem, 2.5vw + 1rem, 3.25rem);
-      --checker-w: clamp(2.75rem, 4.5vw, 6.5rem);
-      --checker-h: clamp(1.35rem, 2.2vw, 3rem);
-      --corner: clamp(0.65rem, 0.4vw + 0.4rem, 0.95rem);
-      --icon: clamp(1rem, 0.6vw + 0.7rem, 1.35rem);
-      --drawer-pad: clamp(1.25rem, 2.5vw, 2.25rem);
-      --drawer-max: clamp(18rem, 28vw, 28rem);
-      --section-gap: clamp(0.75rem, 1.5vh, 1.5rem);
-      --main-py: clamp(1.25rem, 4vh, 4rem);
-    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    body {
-      background: #fff;
-      color: #000;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      antialiased: true;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    html, body { background: #fff; color: #0c0c0c; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { overflow-x: clip; -webkit-font-smoothing: antialiased; }
     ::selection { background: #000; color: #fff; }
-    .font-orbitron { font-family: 'Orbitron', sans-serif; }
-    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+    a { color: inherit; }
+    .wrap { overflow-x: clip; }
 
-    .page { min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
-
-    .image-reveal {
-      display: none;
-      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    .hero-heading {
+      background: linear-gradient(180deg, #646973 0%, #111418 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+
+    .hero { height: 100vh; display: flex; flex-direction: column; position: relative; overflow-x: clip; }
+    .image-reveal { display: none; position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
     @media (min-width: 1024px) { .image-reveal { display: block; } }
-    .bg-base, .bg-reveal {
-      position: absolute; inset: 0;
-      background-size: cover; background-position: center; background-repeat: no-repeat;
-    }
+    .bg-base, .bg-reveal { position: absolute; inset: 0; background-size: cover; background-position: center; }
     .bg-base { background-image: url('media/bg-1.jpg'); }
     .bg-reveal { background-image: url('media/bg-2.jpg'); }
-    .grid-overlay { position: absolute; inset: 0; opacity: 0.10; }
+    .grid-overlay { position: absolute; inset: 0; opacity: 0.1; }
+    .hero-scrim {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.2) 28%, rgba(255,255,255,0) 48%),
+        linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.55) 38%, rgba(255,255,255,0) 62%);
+    }
 
-    header {
+    nav {
       position: relative; z-index: 20;
-      padding-inline: var(--pad-x);
-      padding-top: var(--header-pt);
-      padding-bottom: var(--section-gap);
-      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-      background: linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.6) 70%, rgba(255,255,255,0) 100%);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 1.5rem 0;
+      color: #1a1d22;
+      font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em;
+      font-size: 0.875rem;
     }
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 900;
-      letter-spacing: 0.15em;
-      font-size: var(--logo);
-      background: none; border: 0; cursor: pointer; color: inherit;
-    }
-    .logo:hover { opacity: 0.8; }
-    .logo sup { font-size: var(--logo-deg); margin-left: 0.125rem; position: relative; top: -0.125rem; }
-    nav { display: flex; align-items: center; gap: var(--gap-nav); }
-    nav button {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: var(--nav);
-      background: none; border: 0; cursor: pointer; color: inherit;
-    }
-    nav button:hover { opacity: 0.5; }
-    .nav-div { color: #9ca3af; }
+    @media (min-width: 768px) { nav { padding: 2rem 2.5rem 0; font-size: 1.1rem; } }
+    @media (min-width: 1024px) { nav { font-size: 1.25rem; } }
+    nav a { text-decoration: none; transition: opacity 0.2s; }
+    nav a:hover { opacity: 0.7; }
 
-    main {
-      position: relative; z-index: 10; flex: 1;
-      padding-inline: var(--pad-x);
-      padding-block: var(--main-py);
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    @media (min-width: 1024px) {
-      main { flex-direction: row; justify-content: space-between; align-items: stretch; }
-    }
-
-    .hero-left {
-      display: flex; flex-direction: column; justify-content: center; max-width: 38rem;
-      padding: 1.25rem 1.5rem 1.25rem 0;
-      background: linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.88) 72%, rgba(255,255,255,0) 100%);
-    }
-    .brackets { display: flex; }
-    .headline {
+    .hero-title-wrap { overflow: hidden; position: relative; z-index: 12; }
+    .hero h1 {
       font-family: 'Orbitron', sans-serif;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      line-height: 1.05;
-      font-size: var(--headline);
-      margin: 0.35rem 0;
+      font-weight: 900; text-transform: uppercase; letter-spacing: -0.04em;
+      line-height: 0.9; white-space: nowrap; width: 100%;
+      font-size: 12vw; margin-top: 1.5rem; padding: 0 4vw;
     }
-    .headline-row { display: flex; align-items: flex-end; gap: 0.55rem; }
-    .cta {
-      margin-top: 1.25rem; align-self: flex-start;
-      border: 1px solid #9ca3af; border-radius: 0.375rem;
-      text-transform: uppercase; letter-spacing: 0.18em;
-      font-size: var(--body); font-weight: 600;
-      padding: var(--btn-py) var(--btn-px);
-      background: #fff; cursor: pointer;
+    @media (min-width: 640px) { .hero h1 { font-size: 13vw; margin-top: 1rem; } }
+    @media (min-width: 768px) { .hero h1 { font-size: 13.5vw; margin-top: -0.4rem; } }
+    @media (min-width: 1024px) { .hero h1 { font-size: 14.5vw; } }
+
+    .hero-bottom {
+      position: relative; z-index: 12; margin-top: auto;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 0 1.5rem 1.75rem;
+    }
+    @media (min-width: 768px) { .hero-bottom { padding: 0 2.5rem 2.5rem; } }
+    .hero-bottom p {
+      color: #1a1d22; font-weight: 300; text-transform: uppercase; letter-spacing: 0.08em;
+      line-height: 1.35; font-size: clamp(0.75rem, 1.4vw, 1.15rem);
+      max-width: 220px;
+    }
+    .contact-btn {
       display: inline-flex; align-items: center; gap: 0.45rem;
+      border-radius: 999px; background: #0c0c0c; color: #fff;
+      text-decoration: none; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em;
+      padding: 0.75rem 2rem; font-size: 0.75rem;
     }
-    .cta:hover { background: #000; color: #fff; border-color: #000; }
-    .cta:hover .arrow { transform: translate(2px, -2px); }
-    .arrow { transition: transform 0.2s ease; width: var(--icon); height: var(--icon); }
+    @media (min-width: 768px) { .contact-btn { padding: 1rem 3rem; font-size: 0.95rem; } }
+    .contact-btn:hover { opacity: 0.85; }
 
-    .hero-right {
-      align-self: flex-end; min-width: var(--feature-min); padding: var(--feature-pad);
-      position: relative;
-      background: rgba(255,255,255,0.88);
+    .portrait {
+      position: absolute; left: 50%; transform: translateX(-50%); z-index: 10;
+      width: 220px; bottom: 18%;
     }
-    .hero-right p {
-      font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
-      font-size: var(--body);
-    }
-    .contacts { display: flex; gap: 0.65rem; margin-top: 0.9rem; }
-    .contacts a {
-      width: 2rem; height: 2rem; display: grid; place-items: center;
-      border: 1px solid #9ca3af; color: #000; text-decoration: none;
-    }
-    .contacts a:hover { background: #000; color: #fff; border-color: #000; }
-    .contacts svg { width: 0.95rem; height: 0.95rem; }
-    .corner { position: absolute; width: var(--corner); height: var(--corner); }
+    @media (min-width: 640px) { .portrait { width: 280px; bottom: 0; top: auto; } }
+    @media (min-width: 768px) { .portrait { width: 340px; } }
+    @media (min-width: 1024px) { .portrait { width: 400px; } }
+    .portrait img { width: 100%; display: block; object-fit: cover; }
 
-    .mobile-shot {
-      display: block; margin: 0 var(--pad-x) var(--pad-y);
-      border: 1px solid #e5e7eb; overflow: hidden;
-      aspect-ratio: 4 / 5;
-      background: url('media/bg-1.jpg') center/cover no-repeat;
-    }
-    @media (min-width: 640px) { .mobile-shot { aspect-ratio: 16 / 9; } }
-    @media (min-width: 1024px) { .mobile-shot { display: none; } }
+    .fade { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.25,0.1,0.25,1), transform 0.7s cubic-bezier(0.25,0.1,0.25,1); }
+    .fade.in { opacity: 1; transform: none; }
+    .d0 { transition-delay: 0s; } .d1 { transition-delay: 0.15s; } .d2 { transition-delay: 0.35s; }
+    .d3 { transition-delay: 0.5s; } .d4 { transition-delay: 0.6s; }
 
-    .drawer-root { position: fixed; inset: 0; z-index: 40; }
-    .drawer-root[hidden] { display: none !important; }
-    .backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.2); backdrop-filter: blur(2px); }
-    .drawer {
-      position: absolute; top: 0; right: 0; height: 100%;
-      width: min(100%, clamp(20rem, 34vw, 32rem));
-      background: #fff; border-left: 1px solid #e5e7eb;
-      padding: var(--drawer-pad);
-      transform: translateX(100%);
-      transition: transform 0.28s ease;
-      overflow: auto;
+    #marquee { background: #fff; padding: 6rem 0 2.5rem; overflow: hidden; }
+    .mq-row { display: flex; gap: 0.75rem; width: max-content; will-change: transform; }
+    .mq-row + .mq-row { margin-top: 0.75rem; }
+    .mq-row img { width: 420px; height: 270px; object-fit: cover; border-radius: 1rem; flex: none; background: #f3f4f6; }
+
+    #about { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 1.25rem; position: relative; }
+    #about h2, #path h2, #work h2 {
+      font-family: 'Orbitron', sans-serif; font-weight: 900; text-transform: uppercase;
+      line-height: 0.9; letter-spacing: -0.04em; font-size: clamp(3rem, 12vw, 140px);
     }
-    .drawer-root.open .drawer { transform: none; }
-    .drawer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
-    .drawer-head h2 {
-      font-family: 'Orbitron', sans-serif; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.12em; font-size: 1.05rem;
+    #aboutText { color: #2a3038; font-weight: 500; line-height: 1.7; max-width: 560px; font-size: clamp(1rem, 2vw, 1.35rem); margin: 2.5rem 0 4rem; }
+    .orbit { position: absolute; pointer-events: none; }
+    .orbit img { width: 100%; display: block; }
+
+    #path { background: #fff; border-top-left-radius: 50px; border-top-right-radius: 50px; padding: 6rem 1.5rem 7rem; }
+    .path-list { max-width: 64rem; margin: 4rem auto 0; }
+    .path-item { display: flex; gap: 1.5rem; align-items: flex-start; padding: 2.2rem 0; border-top: 1px solid rgba(12,12,12,0.15); }
+    .num { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(2.4rem, 8vw, 110px); line-height: 0.9; min-width: 0.9em; }
+    .path-item h3 { font-weight: 500; text-transform: uppercase; font-size: clamp(1rem, 2.2vw, 2rem); margin-bottom: 0.4rem; }
+    .path-item p { font-weight: 300; line-height: 1.65; max-width: 42rem; font-size: clamp(0.85rem, 1.6vw, 1.2rem); opacity: 0.65; }
+
+    #work { background: #0c0c0c; color: #d7e2ea; border-top-left-radius: 50px; border-top-right-radius: 50px; margin-top: -2.5rem; padding: 5rem 1.25rem 8rem; position: relative; z-index: 5; }
+    #work h2 { margin-bottom: 2rem; }
+    .stack { max-width: 1100px; margin: 0 auto; }
+    .stack-slot { height: 85vh; position: relative; }
+    .stack-card {
+      position: sticky; top: 6rem; border: 2px solid #d7e2ea; background: #0c0c0c;
+      border-radius: 50px; padding: 1.5rem 1.75rem 1.75rem; transform-origin: top center; will-change: transform;
     }
-    .drawer-close { background: none; border: 0; cursor: pointer; font-size: 1.25rem; line-height: 1; }
-    .drawer-body { font-size: var(--body); line-height: 1.7; color: #111; }
-    .drawer-body .sub { font-size: var(--micro); letter-spacing: 0.16em; text-transform: uppercase; color: #6b7280; margin-bottom: 0.85rem; }
-    .drawer-body p { margin-bottom: 0.85rem; }
-    .drawer-body ul { list-style: none; margin-top: 1rem; }
-    .drawer-body li { border-top: 1px solid #e5e7eb; padding: 0.45rem 0; letter-spacing: 0.12em; text-transform: uppercase; font-size: var(--micro); }
-    .drawer-body h3 {
-      font-family: 'Orbitron', sans-serif; font-size: var(--nav);
-      letter-spacing: 0.16em; text-transform: uppercase; margin: 1.25rem 0 0.45rem;
+    .card-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.25rem; }
+    .card-top .num { color: #d7e2ea; }
+    .card-kicker { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; }
+    .card-name { font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; font-weight: 600; }
+    .ghost {
+      border: 2px solid #d7e2ea; border-radius: 999px; padding: 0.65rem 1.4rem;
+      text-transform: uppercase; letter-spacing: 0.18em; text-decoration: none; font-size: 0.8rem;
     }
-    .drawer-body .contact-row { margin-top: 1.5rem; letter-spacing: 0.04em; }
-    .drawer-body .contact-row a { color: #000; }
-    .drawer-foot {
-      margin-top: 2rem; text-align: center; color: #6b7280;
-      font-size: var(--micro); letter-spacing: 0.14em; text-transform: uppercase;
+    .ghost:hover { background: rgba(215,226,234,0.1); }
+    .card-grid { display: grid; grid-template-columns: 2fr 3fr; gap: 0.75rem; }
+    .card-col { display: flex; flex-direction: column; gap: 0.75rem; }
+    .card-grid img { width: 100%; object-fit: cover; border-radius: 40px; display: block; background: #151515; }
+    .h-a { height: clamp(130px, 16vw, 230px); }
+    .h-b { height: clamp(160px, 22vw, 340px); }
+    .h-c { height: 100%; min-height: clamp(300px, 40vw, 500px); }
+
+    #contact { background: #0c0c0c; color: #d7e2ea; padding: 2rem 1.5rem 4rem; text-align: center; }
+    #contact a { color: #d7e2ea; margin: 0 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.8rem; text-decoration: none; }
+    #contact a:hover { opacity: 0.7; }
+
+    @media (max-width: 700px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .portrait { top: 48%; bottom: auto; }
+      .path-item { flex-direction: column; gap: 0.5rem; }
     }
   </style>
 </head>
 <body>
-  <div class="image-reveal" aria-hidden="true">
-    <div class="bg-base"></div>
-    <div class="bg-reveal"></div>
-    <svg class="grid-overlay" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="gridPattern" width="48" height="48" patternUnits="userSpaceOnUse">
-          <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#64748b" stroke-width="0.6"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#gridPattern)" />
-    </svg>
-  </div>
+  <div class="wrap">
+    <section class="hero" id="top">
+      <div class="image-reveal" aria-hidden="true">
+        <div class="bg-base"></div>
+        <div class="bg-reveal"></div>
+        <svg class="grid-overlay" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="gridPattern" width="48" height="48" patternUnits="userSpaceOnUse">
+              <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#64748b" stroke-width="0.6"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#gridPattern)"/>
+        </svg>
+      </div>
+      <div class="hero-scrim"></div>
 
-  <div class="page">
-    <header>
-      <button class="logo" type="button">JFA<sup>˚</sup></button>
-      <nav>
-        <button type="button" data-drawer="aerospace">Aerospace</button>
-        <button type="button" data-drawer="chemistry">Chemistry</button>
-        <button type="button" data-drawer="micro">Micro</button>
-        <span class="nav-div">|</span>
-        <button type="button" data-drawer="systems">Systems</button>
+      <nav class="fade d0">
+        <a href="#about" data-scroll>About</a>
+        <a href="#path" data-scroll>Path</a>
+        <a href="#work" data-scroll>Work</a>
+        <a href="#contact" data-scroll>Contact</a>
       </nav>
-    </header>
 
-    <main>
-      <div class="hero-left">
-        <svg class="corner" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 11.5V0.5H11.5"/></svg>
-        <h1 class="headline">
-          Materials<br />
-          Process<br />
-          <span class="headline-row">
-            Technology
-            <svg width="36" height="18" viewBox="0 0 36 18" style="width:var(--checker-w);height:var(--checker-h);transform:translateY(2px)" aria-hidden="true">
-              <g fill="#000">
-                <rect x="0" y="0" width="3.8" height="3.8"/><rect x="7.6" y="0" width="3.8" height="3.8"/><rect x="15.2" y="0" width="3.8" height="3.8"/><rect x="22.8" y="0" width="3.8" height="3.8"/>
-                <rect x="2.25" y="4.6" width="3.8" height="3.8"/><rect x="9.85" y="4.6" width="3.8" height="3.8"/><rect x="17.45" y="4.6" width="3.8" height="3.8"/><rect x="25.05" y="4.6" width="3.8" height="3.8"/>
-                <rect x="0" y="9.2" width="3.8" height="3.8"/><rect x="7.6" y="9.2" width="3.8" height="3.8"/><rect x="15.2" y="9.2" width="3.8" height="3.8"/><rect x="22.8" y="9.2" width="3.8" height="3.8"/>
-                <rect x="2.25" y="13.8" width="3.8" height="3.8"/><rect x="9.85" y="13.8" width="3.8" height="3.8"/><rect x="17.45" y="13.8" width="3.8" height="3.8"/><rect x="25.05" y="13.8" width="3.8" height="3.8"/>
-              </g>
-            </svg>
-          </span>
-        </h1>
-        <svg class="corner" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 0.5V11.5H11.5"/></svg>
-        <button class="cta" type="button" data-drawer="profile">
-          Read profile
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
-        </button>
+      <div class="hero-title-wrap">
+        <h1 class="hero-heading fade d1">Hi, i&apos;m José</h1>
       </div>
 
-      <aside class="hero-right">
-        <svg class="corner" style="top:0;left:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 11.5V0.5H11.5"/></svg>
-        <svg class="corner" style="top:0;right:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 0.5H11.5V11.5"/></svg>
-        <svg class="corner" style="bottom:0;left:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 0.5V11.5H11.5"/></svg>
-        <svg class="corner" style="bottom:0;right:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 11.5H11.5V0.5"/></svg>
-        <p>M&amp;PT Engineer.<br />Collins Landing Systems.</p>
-        <div class="contacts">
-          <a href="mailto:jose@joseqc.com" title="Email" aria-label="Email">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/in/jf42/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 9H4V20h2.5V9zM5.25 4A1.5 1.5 0 1 0 5.26 7a1.5 1.5 0 0 0 0-3zM20 20h-2.5v-5.6c0-1.8-.6-2.4-1.6-2.4s-1.7.9-1.7 2.5V20H11.7s.05-9.3 0-10.3H14.2v1.5c.5-.9 1.6-1.8 3.2-1.8 2.1 0 3.6 1.4 3.6 4.5V20z"/></svg>
-          </a>
-          <a href="https://github.com/fabreu08" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.71.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.7.12 2.5.34 1.9-1.32 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
-          </a>
+      <div class="portrait fade d4">
+        <div id="magnet">
+          <img src="headshot.jpg" alt="José A. Fernández Abreu" />
         </div>
-      </aside>
-    </main>
-  </div>
-
-  <div class="mobile-shot" role="img" aria-label="Landing gear study"></div>
-
-  <div class="drawer-root" id="drawerRoot" hidden>
-    <div class="backdrop"></div>
-    <aside class="drawer" id="drawerPanel">
-      <div class="drawer-head">
-        <h2 id="drawerTitle">Profile</h2>
-        <button class="drawer-close" type="button" aria-label="Close">×</button>
       </div>
-      <div class="drawer-body" id="drawerBody"></div>
-      <p class="drawer-foot">JFA © 2026 — Materials Process Technology</p>
-    </aside>
-  </div>
 
-  <script type="module">
-    import { initReveal, initDrawers } from './js/reveal.js';
-    initDrawers();
-    if (window.matchMedia('(min-width: 1024px)').matches) initReveal();
-  </script>
+      <div class="hero-bottom">
+        <p class="fade d2">an m&amp;pt engineer driven by process control on mission-critical landing systems</p>
+        <a class="contact-btn fade d3" href="mailto:jose@joseqc.com">Contact Me</a>
+      </div>
+    </section>
+
+    <section id="marquee">
+      <div class="mq-row" id="rowA">
+        <img src="media/bg-1.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-microbiology.jpg" alt="" /><img src="media/obj-cyber.jpg" alt="" /><img src="media/bg-1.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-microbiology.jpg" alt="" />
+        <img src="media/bg-1.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-microbiology.jpg" alt="" /><img src="media/obj-cyber.jpg" alt="" /><img src="media/bg-1.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-microbiology.jpg" alt="" />
+      </div>
+      <div class="mq-row" id="rowB">
+        <img src="media/obj-cyber.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" /><img src="media/obj-microbiology.jpg" alt="" /><img src="media/bg-1.jpg" alt="" /><img src="media/obj-cyber.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" />
+        <img src="media/obj-cyber.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" /><img src="media/obj-microbiology.jpg" alt="" /><img src="media/bg-1.jpg" alt="" /><img src="media/obj-cyber.jpg" alt="" /><img src="media/bg-2.jpg" alt="" /><img src="media/obj-chemistry.jpg" alt="" /><img src="media/obj-aerospace.jpg" alt="" />
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="hero-heading fade">About me</h2>
+      <p id="aboutText" data-text="With more than a decade in regulated science, I now work as an M&PT Engineer at Collins Aerospace Landing Systems. I focus on special processes, coatings, and NADCAP-governed control for landing gear — the same discipline I built in chemistry, microbiology, and systems. Let's build something that holds up under audit."></p>
+      <a class="contact-btn fade" href="mailto:jose@joseqc.com">Contact Me</a>
+    </section>
+
+    <section id="path">
+      <h2 class="fade">Path</h2>
+      <div class="path-list">
+        <article class="path-item fade"><div class="num">01</div><div><h3>Aerospace · M&amp;PT</h3><p>Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems, an RTX business. Chemical processing, coatings, process qualification, and NADCAP-governed control for landing gear in manufacturing, overhaul, and repair.</p></div></article>
+        <article class="path-item fade"><div class="num">02</div><div><h3>Chemistry</h3><p>High-volume wet chemistry across environmental enforcement and pharmaceutical laboratories. Titration, ion chromatography, spectroscopy, and chain-of-custody — if it is not documented, it did not happen.</p></div></article>
+        <article class="path-item fade"><div class="num">03</div><div><h3>Microbiology</h3><p>M.S. Microbiology, University of Florida. Disinfectant efficacy studies, ISO 4 cleanroom monitoring, endotoxin testing, and isolate identification in sterile-drug manufacturing.</p></div></article>
+        <article class="path-item fade"><div class="num">04</div><div><h3>Systems</h3><p>Infrastructure first: hardware, networks, diagnostics. A process is only as good as the record it leaves. That instinct now sits under LIMS, process software, and special-process control.</p></div></article>
+      </div>
+    </section>
+
+    <section id="work">
+      <h2 class="hero-heading fade">Work</h2>
+      <div class="stack">
+        <div class="stack-slot" style="z-index:1">
+          <article class="stack-card" style="top:6rem">
+            <div class="card-top">
+              <div class="num">01</div>
+              <div><div class="card-kicker">Now</div><div class="card-name">Landing Systems</div></div>
+              <a class="ghost" href="mailto:jose@joseqc.com">Contact</a>
+            </div>
+            <div class="card-grid">
+              <div class="card-col"><img class="h-a" src="media/bg-1.jpg" alt="" /><img class="h-b" src="media/obj-aerospace.jpg" alt="" /></div>
+              <img class="h-c" src="media/bg-2.jpg" alt="X-ray landing gear" />
+            </div>
+          </article>
+        </div>
+        <div class="stack-slot" style="z-index:2">
+          <article class="stack-card" style="top:7.5rem">
+            <div class="card-top">
+              <div class="num">02</div>
+              <div><div class="card-kicker">Lab</div><div class="card-name">Chemistry</div></div>
+              <a class="ghost" href="mailto:jose@joseqc.com">Contact</a>
+            </div>
+            <div class="card-grid">
+              <div class="card-col"><img class="h-a" src="media/obj-chemistry.jpg" alt="" /><img class="h-b" src="media/obj-chemistry.jpg" alt="" /></div>
+              <img class="h-c" src="media/obj-chemistry.jpg" alt="" />
+            </div>
+          </article>
+        </div>
+        <div class="stack-slot" style="z-index:3">
+          <article class="stack-card" style="top:9rem">
+            <div class="card-top">
+              <div class="num">03</div>
+              <div><div class="card-kicker">M.S.</div><div class="card-name">Microbiology</div></div>
+              <a class="ghost" href="mailto:jose@joseqc.com">Contact</a>
+            </div>
+            <div class="card-grid">
+              <div class="card-col"><img class="h-a" src="media/obj-microbiology.jpg" alt="" /><img class="h-b" src="media/obj-microbiology.jpg" alt="" /></div>
+              <img class="h-c" src="media/obj-microbiology.jpg" alt="" />
+            </div>
+          </article>
+        </div>
+        <div class="stack-slot" style="z-index:4">
+          <article class="stack-card" style="top:10.5rem">
+            <div class="card-top">
+              <div class="num">04</div>
+              <div><div class="card-kicker">Origin</div><div class="card-name">Systems</div></div>
+              <a class="ghost" href="mailto:jose@joseqc.com">Contact</a>
+            </div>
+            <div class="card-grid">
+              <div class="card-col"><img class="h-a" src="media/obj-cyber.jpg" alt="" /><img class="h-b" src="media/obj-cyber.jpg" alt="" /></div>
+              <img class="h-c" src="media/obj-cyber.jpg" alt="" />
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <a href="mailto:jose@joseqc.com">jose@joseqc.com</a>
+      <a href="https://www.linkedin.com/in/jf42/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/fabreu08" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://drive.google.com/file/d/1FQXbq30I5GoH5onZDLqftWZvv_B0Z43d/view" target="_blank" rel="noopener">CV</a>
+    </footer>
+  </div>
+  <script type="module" src="./js/site.js"></script>
 </body>
 </html>
