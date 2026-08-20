@@ -3,280 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>José A. Fernández Abreu, M.S. — M&amp;PT Engineer</title>
-  <meta name="description" content="José A. Fernández Abreu, M.S. — Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems." />
-  <meta name="author" content="José A. Fernández Abreu" />
-  <meta property="og:title" content="José A. Fernández Abreu, M.S. — M&amp;PT Engineer" />
-  <meta property="og:description" content="A pinned, scroll-driven career through aerospace, chemistry, microbiology, and systems." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://joseqc.com" />
+  <title>JFA˚ — Materials &amp; Process Technology</title>
+  <meta name="description" content="José A. Fernández Abreu, M.S. — M&amp;PT Engineer at Collins Aerospace Landing Systems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Michroma&family=Orbitron:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #07080c;
-      --ink: #f6f7fb;
-      --muted: rgba(246,247,251,0.68);
-      --accent: #e61231;
-      --glow: #ff4d3a;
+      --pad-x: clamp(1.25rem, 4.5vw, 5rem);
+      --pad-y: clamp(1rem, 3vh, 4rem);
+      --header-pt: clamp(1.25rem, 2.5vh, 2.5rem);
+      --gap-nav: clamp(1rem, 2.2vw, 2.25rem);
+      --logo: clamp(1.35rem, 1.2vw + 0.9rem, 2.1rem);
+      --logo-deg: clamp(0.65rem, 0.4vw + 0.45rem, 0.9rem);
+      --nav: clamp(0.65rem, 0.35vw + 0.5rem, 0.875rem);
+      --headline: clamp(2.15rem, 4.5vw + 0.75rem, 5.25rem);
+      --body: clamp(0.7rem, 0.35vw + 0.55rem, 0.9rem);
+      --micro: clamp(0.55rem, 0.25vw + 0.45rem, 0.7rem);
+      --btn-px: clamp(1.15rem, 1.4vw, 1.75rem);
+      --btn-py: clamp(0.6rem, 0.9vh, 0.85rem);
+      --feature-pad: clamp(1rem, 1.5vw, 1.75rem);
+      --feature-min: clamp(13rem, 18vw, 20rem);
+      --globe: clamp(2.25rem, 2.5vw + 1rem, 3.25rem);
+      --checker-w: clamp(2.75rem, 4.5vw, 6.5rem);
+      --checker-h: clamp(1.35rem, 2.2vw, 3rem);
+      --corner: clamp(0.65rem, 0.4vw + 0.4rem, 0.95rem);
+      --icon: clamp(1rem, 0.6vw + 0.7rem, 1.35rem);
+      --drawer-pad: clamp(1.25rem, 2.5vw, 2.25rem);
+      --drawer-max: clamp(18rem, 28vw, 28rem);
+      --section-gap: clamp(0.75rem, 1.5vh, 1.5rem);
+      --main-py: clamp(1.25rem, 4vh, 4rem);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background: var(--bg); color: var(--ink); font-family: Manrope, sans-serif; }
-    body { overflow-x: hidden; }
-    body[data-era="0"] { --accent: #e61231; --glow: #ff5a3c; }
-    body[data-era="1"] { --accent: #d4a017; --glow: #5eead4; }
-    body[data-era="2"] { --accent: #86efac; --glow: #4ade80; }
-    body[data-era="3"] { --accent: #22d3ee; --glow: #60a5fa; }
-
-    .progress {
-      position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 20;
-      background: var(--accent); transform: scaleX(0); transform-origin: 0 50%;
+    html, body { height: 100%; }
+    body {
+      background: #fff;
+      color: #000;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      antialiased: true;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    .topbar {
-      position: fixed; top: 2px; left: 0; right: 0; z-index: 15;
+    ::selection { background: #000; color: #fff; }
+    .font-orbitron { font-family: 'Orbitron', sans-serif; }
+    .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    .page { min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+
+    .image-reveal {
+      display: none;
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    @media (min-width: 1024px) { .image-reveal { display: block; } }
+    .bg-base, .bg-reveal {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+    }
+    .bg-base { background-image: url('media/bg-1.jpg'); }
+    .bg-reveal { background-image: url('media/bg-2.jpg'); }
+    .grid-overlay { position: absolute; inset: 0; opacity: 0.10; }
+
+    header {
+      position: relative; z-index: 20;
+      padding-inline: var(--pad-x);
+      padding-top: var(--header-pt);
+      padding-bottom: var(--section-gap);
       display: flex; justify-content: space-between; align-items: center;
-      padding: 18px 28px;
-      mix-blend-mode: normal;
     }
-    .brand, .chip, .kicker, .meta, footer {
-      font-family: 'IBM Plex Mono', monospace;
-      letter-spacing: 0.18em;
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      font-size: var(--logo);
+      background: none; border: 0; cursor: pointer; color: inherit;
+    }
+    .logo:hover { opacity: 0.8; }
+    .logo sup { font-size: var(--logo-deg); margin-left: 0.125rem; position: relative; top: -0.125rem; }
+    nav { display: flex; align-items: center; gap: var(--gap-nav); }
+    nav button {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
       text-transform: uppercase;
-      font-size: 10px;
+      letter-spacing: 0.2em;
+      font-size: var(--nav);
+      background: none; border: 0; cursor: pointer; color: inherit;
     }
-    .brand b { color: var(--accent); font-weight: 500; }
-    .chip { color: var(--glow); }
-    .links { display: flex; gap: 10px; }
-    .links a {
-      width: 34px; height: 34px; display: grid; place-items: center;
-      color: var(--ink); text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(16px);
-    }
-    .links a:hover { border-color: var(--accent); color: var(--accent); }
+    nav button:hover { opacity: 0.5; }
+    .nav-div { color: #9ca3af; }
 
-    .track { height: 420vh; }
-    .stage {
-      position: sticky; top: 0; height: 100vh;
-      display: grid; grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
-      align-items: center;
-      padding: 88px 6vw 40px;
-      overflow: hidden;
+    main {
+      position: relative; z-index: 10; flex: 1;
+      padding-inline: var(--pad-x);
+      padding-block: var(--main-py);
+      display: flex; flex-direction: column; justify-content: space-between;
     }
-    .stage::before {
-      content: '';
-      position: absolute; inset: auto -10% -20% 40%;
-      height: 70%;
-      background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 22%, transparent), transparent 68%);
-      filter: blur(8px);
-      pointer-events: none;
-      transition: background 0.5s ease;
+    @media (min-width: 1024px) {
+      main { flex-direction: row; justify-content: space-between; align-items: stretch; }
     }
 
-    .copy { position: relative; z-index: 2; max-width: 560px; }
-    .scene { position: absolute; inset: auto auto auto 0; width: min(560px, 100%); opacity: 0; pointer-events: none; transform: translateY(18px); }
-    .scene.is-on { position: relative; opacity: 1; pointer-events: auto; transform: none; }
-    .kicker { color: var(--glow); margin-bottom: 14px; display: flex; gap: 10px; align-items: center; }
-    .kicker i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
-    h1 {
-      font-family: Syne, sans-serif;
+    .hero-left { display: flex; flex-direction: column; justify-content: center; max-width: 36rem; }
+    .brackets { display: flex; }
+    .headline {
+      font-family: 'Orbitron', sans-serif;
       font-weight: 800;
-      font-size: clamp(52px, 8.4vw, 118px);
-      line-height: 0.86;
-      letter-spacing: -0.04em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      letter-spacing: 0.08em;
+      line-height: 1.05;
+      font-size: var(--headline);
+      margin: 0.35rem 0;
     }
-    .lede { font-size: clamp(16px, 2vw, 22px); color: var(--muted); max-width: 18ch; margin-bottom: 22px; }
-    .glass {
-      padding: 18px 20px;
-      background: rgba(255,255,255,0.045);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-left: 2px solid var(--accent);
-      backdrop-filter: blur(22px) saturate(1.2);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    .headline-row { display: flex; align-items: flex-end; gap: 0.55rem; }
+    .cta {
+      margin-top: 1.25rem; align-self: flex-start;
+      border: 1px solid #9ca3af; border-radius: 0.375rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      font-size: var(--body); font-weight: 600;
+      padding: var(--btn-py) var(--btn-px);
+      background: #fff; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.45rem;
     }
-    .glass p { font-size: 15.5px; line-height: 1.65; color: var(--muted); margin-bottom: 12px; }
-    .glass p:last-child { margin-bottom: 0; }
-    .glass strong { color: var(--ink); font-weight: 600; }
-    .glass a { color: var(--glow); }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .tags span {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 6px 9px; border: 1px solid rgba(255,255,255,0.14); color: var(--glow);
-    }
+    .cta:hover { background: #000; color: #fff; border-color: #000; }
+    .cta:hover .arrow { transform: translate(2px, -2px); }
+    .arrow { transition: transform 0.2s ease; width: var(--icon); height: var(--icon); }
 
-    .hero {
-      position: relative; z-index: 2; height: min(78vh, 720px);
-      display: grid; place-items: center;
-      perspective: 1400px;
+    .hero-right { align-self: flex-end; min-width: var(--feature-min); padding: var(--feature-pad); position: relative; }
+    .hero-right p {
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+      font-size: var(--body); margin-top: 0.75rem;
     }
-    .hero-inner {
-      width: min(100%, 640px); height: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.12s linear;
-    }
-    .obj, .obj-ref {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: contain; opacity: 0;
-      filter: drop-shadow(0 30px 50px rgba(0,0,0,0.55));
-      pointer-events: none;
-    }
-    .obj.is-on { opacity: 1; }
-    .obj-ref {
-      top: 58%; height: 42%;
-      transform: scaleY(-1);
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.28), transparent 70%);
-      opacity: 0; filter: blur(0.4px);
-    }
-    .obj-ref.is-on { opacity: 0.55; }
+    .corner { position: absolute; width: var(--corner); height: var(--corner); }
 
-    .counter {
-      position: absolute; right: 6vw; bottom: 28px; z-index: 3;
-      font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.22em;
-      font-size: 11px; color: rgba(255,255,255,0.45);
+    .mobile-shot {
+      display: block; margin: 0 var(--pad-x) var(--pad-y);
+      border: 1px solid #e5e7eb; overflow: hidden;
+      aspect-ratio: 4 / 5;
+      background: url('media/bg-1.jpg') center/cover no-repeat;
     }
-    .counter b { color: var(--ink); font-weight: 500; }
+    @media (min-width: 640px) { .mobile-shot { aspect-ratio: 16 / 9; } }
+    @media (min-width: 1024px) { .mobile-shot { display: none; } }
 
-    footer {
-      position: fixed; left: 28px; bottom: 22px; z-index: 15;
-      color: rgba(255,255,255,0.32);
+    .drawer-root { position: fixed; inset: 0; z-index: 40; }
+    .drawer-root[hidden] { display: none !important; }
+    .backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.2); backdrop-filter: blur(2px); }
+    .drawer {
+      position: absolute; top: 0; right: 0; height: 100%;
+      width: min(100%, var(--drawer-max));
+      background: #fff; border-left: 1px solid #e5e7eb;
+      padding: var(--drawer-pad);
+      transform: translateX(100%);
+      transition: transform 0.28s ease;
+      overflow: auto;
     }
-
-    @media (max-width: 900px) {
-      .stage { grid-template-columns: 1fr; padding: 84px 22px 24px; align-content: start; }
-      .hero { height: 42vh; order: -1; }
-      h1 { font-size: 48px; }
-      .scene { position: relative; width: 100%; }
-      .scene:not(.is-on) { display: none; }
-      footer { left: 22px; }
-      .counter { right: 22px; }
+    .drawer-root.open .drawer { transform: none; }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+    .drawer-head h2 {
+      font-family: 'Orbitron', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em; font-size: 1.05rem;
     }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-inner, .scene { transition: none; }
+    .drawer-close { background: none; border: 0; cursor: pointer; font-size: 1.25rem; line-height: 1; }
+    .drawer-body { font-size: var(--body); line-height: 1.7; color: #111; }
+    .drawer-body .sub { font-size: var(--micro); letter-spacing: 0.16em; text-transform: uppercase; color: #6b7280; margin-bottom: 0.85rem; }
+    .drawer-body p { margin-bottom: 0.85rem; }
+    .drawer-body ul { list-style: none; margin-top: 1rem; }
+    .drawer-body li { border-top: 1px solid #e5e7eb; padding: 0.45rem 0; letter-spacing: 0.12em; text-transform: uppercase; font-size: var(--micro); }
+    .drawer-foot {
+      margin-top: 2rem; text-align: center; color: #6b7280;
+      font-size: var(--micro); letter-spacing: 0.14em; text-transform: uppercase;
     }
   </style>
 </head>
-<body data-era="0">
-  <div class="progress" id="progress"></div>
-  <header class="topbar">
-    <div class="brand">JFA <b>/</b> M&amp;PT</div>
-    <div class="chip" id="chip">01 · Aerospace</div>
-    <nav class="links" aria-label="Contact">
-      <a href="https://drive.google.com/file/d/1FQXbq30I5GoH5onZDLqftWZvv_B0Z43d/view" target="_blank" rel="noopener" title="CV"><i class="fas fa-file-lines"></i></a>
-      <a href="mailto:jose@joseqc.com" title="Email"><i class="fas fa-envelope"></i></a>
-      <a href="https://github.com/fabreu08" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/jf42/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-    </nav>
-  </header>
-
-  <div class="track">
-    <div class="stage" id="stage">
-      <div class="copy">
-        <article class="scene is-on" data-era="0">
-          <div class="kicker"><i></i> Now · Collins Aerospace · Landing Systems</div>
-          <h1>Aerospace</h1>
-          <p class="lede">Materials &amp; Process Technology Engineer</p>
-          <div class="glass">
-            <p>I am a <strong>Materials &amp; Process Technology (M&amp;PT) Engineer</strong> at <strong>Collins Aerospace Landing Systems</strong>, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business. A decade of regulated laboratory science, now applied to aerospace materials, special processes, and process engineering.</p>
-            <p>Coatings, chemical processing, process qualification, and NADCAP-governed control for landing gear in manufacturing, overhaul, and repair.</p>
-          </div>
-          <div class="tags"><span>NADCAP Gold</span><span>AC7108</span><span>FAA Part 145</span></div>
-        </article>
-        <article class="scene" data-era="1">
-          <div class="kicker"><i></i> 02 · Wet chemistry · EPA / USP</div>
-          <h1>Chemistry</h1>
-          <p class="lede">Titrations. Traceability. Defensible data.</p>
-          <div class="glass">
-            <p>Before aerospace I spent years in high-volume <strong>wet chemistry</strong> — environmental enforcement and pharmaceutical laboratories — where titration, ion chromatography, spectroscopy, and chain-of-custody were the job.</p>
-            <p>If the chemistry is not documented, it did not happen. That is the discipline I now bring to process baths and special-process control.</p>
-          </div>
-          <div class="tags"><span>EPA</span><span>USP</span><span>NELAC</span><span>cGMP</span></div>
-        </article>
-        <article class="scene" data-era="2">
-          <div class="kicker"><i></i> 03 · M.S. Microbiology</div>
-          <h1>Micro</h1>
-          <p class="lede">Cells. Cleanrooms. Validation.</p>
-          <div class="glass">
-            <p>Master’s-level <strong>microbiologist</strong> (University of Florida). In sterile-drug manufacturing I ran disinfectant efficacy studies, ISO 4 environmental monitoring, endotoxin testing, and isolate identification.</p>
-            <p>Invisible risk treated as engineering: sampling plans, contact times, and a report that will stand in an audit.</p>
-          </div>
-          <div class="tags"><span>ISO 4</span><span>USP &lt;85&gt;</span><span>EM</span></div>
-        </article>
-        <article class="scene" data-era="3">
-          <div class="kicker"><i></i> 04 · Systems · Data integrity</div>
-          <h1>Systems</h1>
-          <p class="lede">Infrastructure first. Always.</p>
-          <div class="glass">
-            <p>The first professional chapter was <strong>information systems</strong>: hardware, networks, diagnostics, keeping production alive. A process is only as good as the record it leaves behind.</p>
-            <p>That same systems instinct now sits under laboratory LIMS, process software, and aerospace special-process control.</p>
-          </div>
-          <div class="tags"><span>Networks</span><span>LIMS</span><span>Traceability</span></div>
-        </article>
-      </div>
-
-      <div class="hero" aria-hidden="true">
-        <div class="hero-inner" id="heroInner">
-          <img class="obj is-on" data-era="0" src="media/obj-aerospace.jpg" alt="" />
-          <img class="obj" data-era="1" src="media/obj-chemistry.jpg" alt="" />
-          <img class="obj" data-era="2" src="media/obj-microbiology.jpg" alt="" />
-          <img class="obj" data-era="3" src="media/obj-cyber.jpg" alt="" />
-          <img class="obj-ref is-on" data-era="0" src="media/obj-aerospace.jpg" alt="" />
-          <img class="obj-ref" data-era="1" src="media/obj-chemistry.jpg" alt="" />
-          <img class="obj-ref" data-era="2" src="media/obj-microbiology.jpg" alt="" />
-          <img class="obj-ref" data-era="3" src="media/obj-cyber.jpg" alt="" />
-        </div>
-      </div>
-      <div class="counter"><b id="n">01</b> / 04</div>
-    </div>
+<body>
+  <div class="image-reveal" aria-hidden="true">
+    <div class="bg-base"></div>
+    <div class="bg-reveal"></div>
+    <svg class="grid-overlay" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="gridPattern" width="48" height="48" patternUnits="userSpaceOnUse">
+          <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#64748b" stroke-width="0.6"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#gridPattern)" />
+    </svg>
   </div>
-  <footer>joseqc.com · scroll the path</footer>
 
-  <script>
-    const LABELS = ['01 · Aerospace', '02 · Chemistry', '03 · Micro', '04 · Systems'];
-    const scenes = [...document.querySelectorAll('.scene')];
-    const objs = [...document.querySelectorAll('.obj, .obj-ref')];
-    const chip = document.getElementById('chip');
-    const nEl = document.getElementById('n');
-    const progress = document.getElementById('progress');
-    const heroInner = document.getElementById('heroInner');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let pointer = { x: 0, y: 0 };
+  <div class="page">
+    <header>
+      <button class="logo" type="button">JFA<sup>˚</sup></button>
+      <nav>
+        <button type="button" data-drawer="aerospace">Aerospace</button>
+        <button type="button" data-drawer="chemistry">Chemistry</button>
+        <button type="button" data-drawer="micro">Micro</button>
+        <span class="nav-div">|</span>
+        <button type="button" data-drawer="systems">Systems</button>
+      </nav>
+    </header>
 
-    function setEra(index) {
-      document.body.dataset.era = String(index);
-      chip.textContent = LABELS[index];
-      nEl.textContent = String(index + 1).padStart(2, '0');
-      scenes.forEach((el, i) => el.classList.toggle('is-on', i === index));
-      objs.forEach((el) => el.classList.toggle('is-on', Number(el.dataset.era) === index));
-    }
+    <main>
+      <div class="hero-left">
+        <svg class="corner" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 11.5V0.5H11.5"/></svg>
+        <h1 class="headline">
+          Materials<br />
+          Process<br />
+          <span class="headline-row">
+            Technology
+            <svg width="36" height="18" viewBox="0 0 36 18" style="width:var(--checker-w);height:var(--checker-h);transform:translateY(2px)" aria-hidden="true">
+              <g fill="#000">
+                <rect x="0" y="0" width="3.8" height="3.8"/><rect x="7.6" y="0" width="3.8" height="3.8"/><rect x="15.2" y="0" width="3.8" height="3.8"/><rect x="22.8" y="0" width="3.8" height="3.8"/>
+                <rect x="2.25" y="4.6" width="3.8" height="3.8"/><rect x="9.85" y="4.6" width="3.8" height="3.8"/><rect x="17.45" y="4.6" width="3.8" height="3.8"/><rect x="25.05" y="4.6" width="3.8" height="3.8"/>
+                <rect x="0" y="9.2" width="3.8" height="3.8"/><rect x="7.6" y="9.2" width="3.8" height="3.8"/><rect x="15.2" y="9.2" width="3.8" height="3.8"/><rect x="22.8" y="9.2" width="3.8" height="3.8"/>
+                <rect x="2.25" y="13.8" width="3.8" height="3.8"/><rect x="9.85" y="13.8" width="3.8" height="3.8"/><rect x="17.45" y="13.8" width="3.8" height="3.8"/><rect x="25.05" y="13.8" width="3.8" height="3.8"/>
+              </g>
+            </svg>
+          </span>
+        </h1>
+        <svg class="corner" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 0.5V11.5H11.5"/></svg>
+        <button class="cta" type="button" data-drawer="aerospace">
+          Read profile
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </button>
+      </div>
 
-    function onScroll() {
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const p = Math.min(1, Math.max(0, window.scrollY / max));
-      progress.style.transform = `scaleX(${p})`;
-      const scaled = p * (scenes.length - 0.0001);
-      const index = Math.min(scenes.length - 1, Math.floor(scaled));
-      setEra(index);
-      if (!reduce) {
-        const tilt = (scaled - index - 0.5) * 16;
-        heroInner.style.transform = `rotateY(${tilt + pointer.x}deg) rotateX(${pointer.y}deg) scale(${1.02 - Math.abs(scaled - index - 0.5) * 0.06})`;
-      }
-    }
+      <aside class="hero-right">
+        <svg class="corner" style="top:0;left:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 11.5V0.5H11.5"/></svg>
+        <svg class="corner" style="top:0;right:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 0.5H11.5V11.5"/></svg>
+        <svg class="corner" style="bottom:0;left:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 0.5V11.5H11.5"/></svg>
+        <svg class="corner" style="bottom:0;right:0" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0.5 11.5H11.5V0.5"/></svg>
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" style="width:var(--globe);height:var(--globe)">
+          <circle cx="32" cy="32" r="28"/>
+          <ellipse cx="32" cy="32" rx="28" ry="12"/>
+          <ellipse cx="32" cy="32" rx="28" ry="20"/>
+          <line x1="32" y1="4" x2="32" y2="60"/>
+          <ellipse cx="32" cy="32" rx="12" ry="28"/>
+          <ellipse cx="32" cy="32" rx="20" ry="28"/>
+        </svg>
+        <p>M&amp;PT Engineer.<br />Collins Landing Systems.</p>
+      </aside>
+    </main>
+  </div>
 
-    window.addEventListener('pointermove', (e) => {
-      pointer.x = (e.clientX / window.innerWidth - 0.5) * 10;
-      pointer.y = (e.clientY / window.innerHeight - 0.5) * -6;
-      onScroll();
-    }, { passive: true });
+  <div class="mobile-shot" role="img" aria-label="Landing gear study"></div>
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    onScroll();
+  <div class="drawer-root" id="drawerRoot" hidden>
+    <div class="backdrop"></div>
+    <aside class="drawer" id="drawerPanel">
+      <div class="drawer-head">
+        <h2 id="drawerTitle">Profile</h2>
+        <button class="drawer-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="drawer-body" id="drawerBody"></div>
+      <p class="drawer-foot">JFA © 2026 — Materials Process Technology</p>
+    </aside>
+  </div>
+
+  <script type="module">
+    import { initReveal, initDrawers } from './js/reveal.js';
+    initDrawers();
+    if (window.matchMedia('(min-width: 1024px)').matches) initReveal();
   </script>
 </body>
 </html>
