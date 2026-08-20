@@ -62,7 +62,7 @@ export function Navbar() {
 
       {open ? (
         <div className="fixed inset-0 z-40 bg-white overflow-y-auto">
-          <div className="min-h-full px-8 sm:px-12 md:px-16 pt-24 pb-16 max-w-xl">
+          <div className="min-h-full px-8 sm:px-12 pt-24 pb-16 max-w-xl md:max-w-lg md:ml-auto md:px-16 md:text-right">
             {MENU.map((section) => (
               <div key={section.id} className="mb-10">
                 <a
