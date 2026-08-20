@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { useTypewriter } from "../hooks/useTypewriter"
 import { LINKS } from "../links"
 import { Background } from "./Background"
+import { ScrollRevealText } from "./ScrollRevealText"
 
-const TYPE_TEXT =
+const BODY_TEXT =
   "Glad you stopped in. As a former chemist & microbiologist with over a decade of lab experience, I'm always looking to collaborate."
 
 const PILLS = [
@@ -27,7 +27,6 @@ function CopyIcon() {
 }
 
 export function Hero() {
-  const { displayed, done } = useTypewriter(TYPE_TEXT, 38, 600)
   const [pillsOn, setPillsOn] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -48,7 +47,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative z-[1]">
-      <div id="hero-runway" className="h-[180vh]">
+      <div id="hero-runway" className="h-[200vh]">
         <div className="hero-stage sticky top-0 h-screen overflow-hidden">
           <Background runwayId="hero-runway" />
           <div className="relative z-10 h-full flex flex-col justify-end pb-12 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 pointer-events-none">
@@ -66,20 +65,7 @@ export function Hero() {
                 M&amp;PT Engineer, Collins Aerospace
               </p>
 
-              <p
-                className="text-black mb-5 sm:mb-6"
-                style={{
-                  fontSize: "clamp(18px, 4vw, 26px)",
-                  lineHeight: 1.35,
-                  fontWeight: 400,
-                  minHeight: 90,
-                }}
-              >
-                {displayed}
-                {!done ? (
-                  <span className="cursor-blink inline-block w-[2px] h-[1.1em] bg-black align-middle ml-[2px]" />
-                ) : null}
-              </p>
+              <ScrollRevealText text={BODY_TEXT} runwayId="hero-runway" />
 
               <div
                 className="flex flex-wrap gap-y-1"

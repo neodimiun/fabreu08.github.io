@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react"
+import { gearX, runwayProgress } from "../runway"
 
 const MASK_SCALE = 0.4
 
-function radius() {
+function hoverRadius() {
   return Math.round(Math.min(420, Math.max(160, window.innerWidth * 0.16)))
 }
 
@@ -33,18 +34,26 @@ export function Background({ runwayId }: Props) {
     }
     resize()
 
-    const readScroll = () => {
-      const rect = runway.getBoundingClientRect()
-      const range = Math.max(1, rect.height - window.innerHeight)
-      scrollP.current = Math.min(1, Math.max(0, -rect.top / range))
+    const paintBlob = (sx: number, sy: number, r: number) => {
+      const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r)
+      g.addColorStop(0, "rgba(255,255,255,1)")
+      g.addColorStop(0.4, "rgba(255,255,255,1)")
+      g.addColorStop(0.6, "rgba(255,255,255,0.75)")
+      g.addColorStop(0.75, "rgba(255,255,255,0.4)")
+      g.addColorStop(0.88, "rgba(255,255,255,0.12)")
+      g.addColorStop(1, "rgba(255,255,255,0)")
+      ctx.fillStyle = g
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
     }
 
     let raf = 0
     const frame = () => {
       const p = scrollP.current
       const on = hovering.current
+      const w = canvas.width
+      const h = canvas.height
 
-      if (!on && p < 0.01) {
+      if (!on && p < 0.008) {
         wrap.style.opacity = "0"
         wrap.style.maskImage = "none"
         wrap.style.webkitMaskImage = "none"
@@ -53,33 +62,32 @@ export function Background({ runwayId }: Props) {
       }
 
       wrap.style.opacity = "1"
-      const m = mouse.current
-      const s = smooth.current
+      ctx.clearRect(0, 0, w, h)
+
+      if (p >= 0.97) {
+        ctx.fillStyle = "rgba(255,255,255,1)"
+        ctx.fillRect(0, 0, w, h)
+      } else if (p > 0.008) {
+        const y = (0.12 + p * 0.8) * h
+        const lg = ctx.createLinearGradient(0, 0, 0, h)
+        const edge = y / h
+        lg.addColorStop(0, "rgba(255,255,255,1)")
+        lg.addColorStop(Math.max(0, edge - 0.04), "rgba(255,255,255,1)")
+        lg.addColorStop(Math.min(1, edge + 0.14), "rgba(255,255,255,0)")
+        lg.addColorStop(1, "rgba(255,255,255,0)")
+        ctx.fillStyle = lg
+        ctx.fillRect(0, 0, w, h)
+
+        const scanR = (hoverRadius() * (1 + p * 1.4)) * MASK_SCALE
+        paintBlob(gearX() * MASK_SCALE, y, scanR)
+      }
+
       if (on) {
+        const s = smooth.current
+        const m = mouse.current
         s.x += (m.x - s.x) * 0.1
         s.y += (m.y - s.y) * 0.1
-      }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      if (p > 0.01) {
-        ctx.fillStyle = `rgba(255,255,255,${p})`
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
-      }
-
-      if (on) {
-        const r = radius() * MASK_SCALE
-        const sx = s.x * MASK_SCALE
-        const sy = s.y * MASK_SCALE
-        const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r)
-        g.addColorStop(0, "rgba(255,255,255,1)")
-        g.addColorStop(0.4, "rgba(255,255,255,1)")
-        g.addColorStop(0.6, "rgba(255,255,255,0.75)")
-        g.addColorStop(0.75, "rgba(255,255,255,0.4)")
-        g.addColorStop(0.88, "rgba(255,255,255,0.12)")
-        g.addColorStop(1, "rgba(255,255,255,0)")
-        ctx.fillStyle = g
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        paintBlob(s.x * MASK_SCALE, s.y * MASK_SCALE, hoverRadius() * MASK_SCALE)
       }
 
       const url = canvas.toDataURL("image/png")
@@ -90,11 +98,15 @@ export function Background({ runwayId }: Props) {
     }
     raf = requestAnimationFrame(frame)
 
-    const setHover = (clientX: number, clientY: number, on: boolean) => {
-      hovering.current = on
+    const readScroll = () => {
+      scrollP.current = runwayProgress(runway)
+    }
+
+    const setHover = (clientX: number, clientY: number, active: boolean) => {
+      hovering.current = active
       mouse.current.x = clientX
       mouse.current.y = clientY
-      if (on) {
+      if (active) {
         smooth.current.x = clientX
         smooth.current.y = clientY
       }
