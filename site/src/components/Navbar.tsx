@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react"
+import { SECTION_IDS, useScrollCurrent } from "../hooks/useScrollCurrent"
 
 const NAV = [
-  { label: "Path & Work", href: "#path" },
-  { label: "Lab Methods", href: "#lab" },
-  { label: "Credentials", href: "#credentials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Path & Work", href: "#path", id: "path" },
+  { label: "Lab Methods", href: "#lab", id: "lab" },
+  { label: "Credentials", href: "#credentials", id: "credentials" },
+  { label: "Contact", href: "#contact", id: "contact" },
 ] as const
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
+  const current = useScrollCurrent(SECTION_IDS)
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
@@ -39,7 +41,13 @@ export function Navbar() {
 
         <div className="hidden md:flex flex-row items-center gap-x-[0.7em] text-[17px] lg:text-[20px] text-black">
           {NAV.map((item, i) => (
-            <a key={item.label} href={item.href} className="hover:opacity-60 transition-opacity">
+            <a
+              key={item.label}
+              href={item.href}
+              className={`hover:opacity-60 transition-opacity ${
+                current === item.id ? "underline underline-offset-4 decoration-1" : ""
+              }`}
+            >
               {i < NAV.length - 1 ? `${item.label},` : item.label}
             </a>
           ))}
@@ -79,7 +87,9 @@ export function Navbar() {
           <a
             key={item.label}
             href={item.href}
-            className="text-[32px] font-medium"
+            className={`text-[32px] font-medium ${
+              current === item.id ? "underline underline-offset-4 decoration-1" : ""
+            }`}
             onClick={() => setOpen(false)}
           >
             {item.label}

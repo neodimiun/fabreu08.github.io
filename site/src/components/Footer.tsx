@@ -17,10 +17,6 @@ export function Footer() {
           {LINKS.email}
         </a>
         {" · "}
-        <a href={LINKS.tel} className="hover:opacity-60 transition-opacity">
-          {LINKS.phone}
-        </a>
-        {" · "}
         <a
           href={LINKS.linkedin}
           target="_blank"

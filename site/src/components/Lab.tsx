@@ -1,4 +1,6 @@
 import type { ReactNode } from "react"
+import { headingActive, SectionRail } from "./SectionRail"
+import { SECTION_IDS, useScrollCurrent } from "../hooks/useScrollCurrent"
 
 function Usp({ n }: { n: string }) {
   return <>USP {"<" + n + ">"}</>
@@ -71,22 +73,41 @@ const GROUPS: { title: string; body: ReactNode }[] = [
   },
 ]
 
+const LAB_ITEMS = GROUPS.map((group, i) => ({
+  id: `lab-${i}`,
+  label: group.title,
+  title: group.title,
+  body: group.body,
+}))
+
+const LAB_IDS = LAB_ITEMS.map((item) => item.id)
+
 export function Lab() {
+  const current = useScrollCurrent(LAB_IDS)
+  const sectionOn = useScrollCurrent(SECTION_IDS) === "lab"
+
   return (
     <section id="lab" className="relative z-[2] bg-[#f4f4f4] px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
-      <div className="max-w-3xl">
-        <h2
-          className="text-[22px] sm:text-[28px] mb-10 text-black tracking-tight"
-          style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
-        >
-          Lab Methods
-        </h2>
-        {GROUPS.map((group) => (
-          <article key={group.title} className="mb-8 last:mb-0">
-            <h3 className="text-[16px] sm:text-[18px] font-medium mb-2 text-black">{group.title}</h3>
-            <p className="text-[15px] sm:text-[17px] leading-[1.65] text-black">{group.body}</p>
-          </article>
-        ))}
+      <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_1fr] lg:gap-16">
+        <div>
+          <h2
+            className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
+          >
+            Lab Methods
+          </h2>
+          {LAB_ITEMS.map((item) => (
+            <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-28">
+              <h3
+                className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && current === item.id)}`}
+              >
+                {item.title}
+              </h3>
+              <p className="text-[15px] sm:text-[17px] leading-[1.65] text-black">{item.body}</p>
+            </article>
+          ))}
+        </div>
+        <SectionRail items={LAB_ITEMS} activeId={sectionOn ? current : ""} image="media/bg-2.jpg" />
       </div>
     </section>
   )
