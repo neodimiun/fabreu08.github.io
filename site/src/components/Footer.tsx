@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="relative z-[2] bg-black text-white px-5 sm:px-8 md:px-10 pt-24 pb-16 sm:pt-28 sm:pb-20"
+      className="relative z-[2] bg-black text-white px-5 sm:px-8 md:px-10 pt-24 pb-16 sm:pt-28 sm:pb-20 text-center"
     >
       <h2
         className="text-[22px] sm:text-[28px] mb-8 tracking-tight"

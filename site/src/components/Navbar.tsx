@@ -7,25 +7,6 @@ const LAB_IDS = LAB_TOC.map((item) => item.id)
 
 const itemClass = "menu-link"
 
-function HomeIcon() {
-  return (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M4 11.5 12 4l8 7.5" />
-      <path d="M6.5 10.5V20h11V10.5" />
-    </svg>
-  )
-}
-
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const currentSection = useScrollCurrent(SECTION_IDS)
@@ -64,7 +45,11 @@ export function Navbar() {
           aria-label="Home"
           onClick={close}
         >
-          <HomeIcon />
+          <img
+            src={`${import.meta.env.BASE_URL}home-mark.png`}
+            alt=""
+            className="h-8 sm:h-9 w-auto"
+          />
         </a>
 
         <button
