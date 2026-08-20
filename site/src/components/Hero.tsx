@@ -4,7 +4,7 @@ import { LINKS } from "../links"
 import { Background } from "./Background"
 
 const TYPE_TEXT =
-  "Glad you stopped in. A decade of lab data has a way of finding this kind of work. Now, what are we building?"
+  "Glad you stopped in. As a former chemist & microbiologist with over a decade of lab experience, I'm always looking to collaborate."
 
 const PILLS = [
   { label: "Read my path", href: "#path" },
@@ -48,7 +48,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative z-[1]">
-      <div id="hero-runway" className="h-[220vh]">
+      <div id="hero-runway" className="h-[180vh]">
         <div className="hero-stage sticky top-0 h-screen overflow-hidden">
           <Background runwayId="hero-runway" />
           <div className="relative z-10 h-full flex flex-col justify-end pb-12 md:justify-center md:pb-0 px-5 sm:px-8 md:px-10 pointer-events-none">
@@ -61,9 +61,9 @@ export function Hero() {
                   fontWeight: 400,
                 }}
               >
-                Hey there, meet José,
+                Hi there, I&apos;m José,
                 <br />
-                M&amp;PT Engineer, Collins Aerospace Landing Systems
+                M&amp;PT Engineer, Collins Aerospace
               </p>
 
               <p
@@ -72,7 +72,7 @@ export function Hero() {
                   fontSize: "clamp(18px, 4vw, 26px)",
                   lineHeight: 1.35,
                   fontWeight: 400,
-                  minHeight: 54,
+                  minHeight: 90,
                 }}
               >
                 {displayed}

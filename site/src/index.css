@@ -75,7 +75,7 @@ body {
   overflow: hidden;
 }
 
-.hero-video,
+.hero-chrome,
 .hero-xray,
 .hero-xray-wrap,
 .hero-scrim {
@@ -87,14 +87,14 @@ body {
   pointer-events: none;
 }
 
-.hero-video,
+.hero-chrome,
 .hero-xray {
   object-fit: cover;
   object-position: 82% center;
 }
 
 @media (min-width: 768px) {
-  .hero-video,
+  .hero-chrome,
   .hero-xray {
     object-position: 68% center;
   }
