@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
-import { headingActive, SectionRail } from "./SectionRail"
-import { SECTION_IDS, useScrollCurrent } from "../hooks/useScrollCurrent"
+import { headingActive, SectionStill } from "./SectionStill"
+import { PATH_IMAGES, SECTION_IDS } from "../toc"
+import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
 
 type Entry = {
   title: string
@@ -87,8 +88,10 @@ const PATH_ITEMS = [
 const PATH_IDS = PATH_ITEMS.map((item) => item.id)
 
 export function Path() {
-  const current = useScrollCurrent(PATH_IDS)
+  const active = useScrollActive(PATH_IDS)
   const sectionOn = useScrollCurrent(SECTION_IDS) === "path"
+  const imageKey = active[active.length - 1] ?? PATH_IDS[0]
+  const image = PATH_IMAGES[imageKey] ?? PATH_IMAGES[PATH_IDS[0]]
 
   return (
     <section id="path" className="relative z-[2] bg-white px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
@@ -107,7 +110,7 @@ export function Path() {
           {PATH_ITEMS.map((item) => (
             <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-28">
               <h3
-                className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && current === item.id)}`}
+                className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
               >
                 {item.title}
               </h3>
@@ -120,7 +123,7 @@ export function Path() {
             </article>
           ))}
         </div>
-        <SectionRail items={PATH_ITEMS} activeId={sectionOn ? current : ""} image="media/bg-1.jpg" />
+        <SectionStill src={image} />
       </div>
     </section>
   )

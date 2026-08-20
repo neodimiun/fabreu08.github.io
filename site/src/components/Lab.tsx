@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
-import { headingActive, SectionRail } from "./SectionRail"
-import { SECTION_IDS, useScrollCurrent } from "../hooks/useScrollCurrent"
+import { headingActive, SectionStill } from "./SectionStill"
+import { LAB_IMAGES, SECTION_IDS } from "../toc"
+import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
 
 function Usp({ n }: { n: string }) {
   return <>USP {"<" + n + ">"}</>
@@ -83,8 +84,10 @@ const LAB_ITEMS = GROUPS.map((group, i) => ({
 const LAB_IDS = LAB_ITEMS.map((item) => item.id)
 
 export function Lab() {
-  const current = useScrollCurrent(LAB_IDS)
+  const active = useScrollActive(LAB_IDS)
   const sectionOn = useScrollCurrent(SECTION_IDS) === "lab"
+  const imageKey = active[active.length - 1] ?? LAB_IDS[0]
+  const image = LAB_IMAGES[imageKey] ?? LAB_IMAGES[LAB_IDS[0]]
 
   return (
     <section id="lab" className="relative z-[2] bg-[#f4f4f4] px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
@@ -99,7 +102,7 @@ export function Lab() {
           {LAB_ITEMS.map((item) => (
             <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-28">
               <h3
-                className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && current === item.id)}`}
+                className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && active.includes(item.id))}`}
               >
                 {item.title}
               </h3>
@@ -107,7 +110,7 @@ export function Lab() {
             </article>
           ))}
         </div>
-        <SectionRail items={LAB_ITEMS} activeId={sectionOn ? current : ""} image="media/bg-2.jpg" />
+        <SectionStill src={image} />
       </div>
     </section>
   )

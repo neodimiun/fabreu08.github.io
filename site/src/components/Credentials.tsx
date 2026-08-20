@@ -1,5 +1,6 @@
-import { headingActive, SectionRail } from "./SectionRail"
-import { SECTION_IDS, useScrollCurrent } from "../hooks/useScrollCurrent"
+import { headingActive, SectionStill } from "./SectionStill"
+import { SECTION_IDS } from "../toc"
+import { useScrollCurrent } from "../hooks/useScrollCurrent"
 
 const ITEMS = [
   "M.S. Microbiology & Cell Science, University of Florida, 2018. Medical Microbiology & Biochemistry, GPA 3.90.",
@@ -35,10 +36,7 @@ export function Credentials() {
             English and Spanish, native fluency in both.
           </p>
         </div>
-        <SectionRail
-          items={[{ id: "credentials", label: "Credentials" }]}
-          activeId={sectionOn ? "credentials" : ""}
-        />
+        <SectionStill src="headshot.jpg" />
       </div>
     </section>
   )

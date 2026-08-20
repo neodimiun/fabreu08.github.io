@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react"
-import { SECTION_IDS, useScrollCurrent } from "../hooks/useScrollCurrent"
-
-const NAV = [
-  { label: "Path & Work", href: "#path", id: "path" },
-  { label: "Lab Methods", href: "#lab", id: "lab" },
-  { label: "Credentials", href: "#credentials", id: "credentials" },
-  { label: "Contact", href: "#contact", id: "contact" },
-] as const
+import { MENU, SECTION_IDS } from "../toc"
+import { useScrollCurrent } from "../hooks/useScrollCurrent"
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
-  const current = useScrollCurrent(SECTION_IDS)
+  const currentSection = useScrollCurrent(SECTION_IDS)
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
@@ -27,10 +21,12 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", onKey)
   }, [])
 
+  const close = () => setOpen(false)
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5 bg-white/75 backdrop-blur-sm">
-        <a href="#top" className="flex flex-row items-center" onClick={() => setOpen(false)}>
+        <a href="#top" className="flex flex-row items-center" onClick={close}>
           <span
             className="text-[21px] sm:text-[26px] tracking-tight text-black"
             style={{ fontFamily: "var(--font-heading)" }}
@@ -39,23 +35,9 @@ export function Navbar() {
           </span>
         </a>
 
-        <div className="hidden md:flex flex-row items-center gap-x-[0.7em] text-[17px] lg:text-[20px] text-black">
-          {NAV.map((item, i) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={`hover:opacity-60 transition-opacity ${
-                current === item.id ? "underline underline-offset-4 decoration-1" : ""
-              }`}
-            >
-              {i < NAV.length - 1 ? `${item.label},` : item.label}
-            </a>
-          ))}
-        </div>
-
         <button
           type="button"
-          className="md:hidden flex flex-col gap-[5px] z-20 rounded-md bg-white/90 p-2.5"
+          className="flex flex-col gap-[5px] z-20 rounded-md bg-white/90 p-2.5"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -79,22 +61,40 @@ export function Navbar() {
       </nav>
 
       <div
-        className={`fixed inset-0 z-[9] bg-white/95 backdrop-blur-sm flex flex-col justify-center items-start px-8 gap-8 md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[9] bg-white/95 backdrop-blur-sm overflow-y-auto transition-opacity duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        {NAV.map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className={`text-[32px] font-medium ${
-              current === item.id ? "underline underline-offset-4 decoration-1" : ""
-            }`}
-            onClick={() => setOpen(false)}
-          >
-            {item.label}
-          </a>
-        ))}
+        <div className="min-h-full px-8 sm:px-12 md:px-16 pt-24 pb-16 max-w-xl">
+          {MENU.map((section) => (
+            <div key={section.id} className="mb-10">
+              <a
+                href={section.href}
+                onClick={close}
+                className={`block text-[28px] sm:text-[32px] mb-3 ${
+                  currentSection === section.id ? "underline underline-offset-4 decoration-1" : ""
+                }`}
+              >
+                {section.label}
+              </a>
+              {section.children.length > 0 ? (
+                <ul className="space-y-2">
+                  {section.children.map((child) => (
+                    <li key={child.id}>
+                      <a
+                        href={child.href}
+                        onClick={close}
+                        className="text-[16px] sm:text-[17px] text-black/70 hover:text-black transition-colors"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   )
