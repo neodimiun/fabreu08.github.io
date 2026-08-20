@@ -68,6 +68,19 @@ body {
   animation: blink 1s step-end infinite;
 }
 
+.menu-link {
+  display: inline-block;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.menu-link:hover {
+  transform: scale(1.04);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
 .hero-stage {
   position: sticky;
   top: 0;

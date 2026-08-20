@@ -1,10 +1,36 @@
 import { useEffect, useState } from "react"
-import { MENU, SECTION_IDS } from "../toc"
-import { useScrollCurrent } from "../hooks/useScrollCurrent"
+import { LAB_TOC, MENU, PATH_TOC, SECTION_IDS } from "../toc"
+import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
+
+const PATH_IDS = PATH_TOC.map((item) => item.id)
+const LAB_IDS = LAB_TOC.map((item) => item.id)
+
+const itemClass = "menu-link"
+
+function HomeIcon() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M4 11.5 12 4l8 7.5" />
+      <path d="M6.5 10.5V20h11V10.5" />
+    </svg>
+  )
+}
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const currentSection = useScrollCurrent(SECTION_IDS)
+  const pathActive = useScrollActive(PATH_IDS)
+  const labActive = useScrollActive(LAB_IDS)
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
@@ -23,16 +49,22 @@ export function Navbar() {
 
   const close = () => setOpen(false)
 
+  const childActive = (sectionId: string, childId: string) => {
+    if (sectionId === "path") return pathActive.includes(childId)
+    if (sectionId === "lab") return labActive.includes(childId)
+    return false
+  }
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5 bg-white/90">
-        <a href="#top" className="flex flex-row items-center relative z-50" onClick={close}>
-          <span
-            className="text-[21px] sm:text-[26px] tracking-tight text-black"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            Jose
-          </span>
+        <a
+          href="#top"
+          className="relative z-50 inline-flex items-center justify-center min-h-11 min-w-11 text-black hover:opacity-60 transition-opacity"
+          aria-label="Home"
+          onClick={close}
+        >
+          <HomeIcon />
         </a>
 
         <button
@@ -62,26 +94,30 @@ export function Navbar() {
 
       {open ? (
         <div className="fixed inset-0 z-40 bg-white overflow-y-auto">
-          <div className="min-h-full px-8 sm:px-12 pt-24 pb-16 max-w-xl md:max-w-lg md:ml-auto md:px-16 md:text-right">
+          <div className="min-h-full px-8 sm:px-12 pt-24 pb-16 max-w-xl mx-auto text-center md:max-w-lg md:mx-0 md:ml-auto md:px-16">
             {MENU.map((section) => (
               <div key={section.id} className="mb-10">
                 <a
                   href={section.href}
                   onClick={close}
-                  className={`block text-[28px] sm:text-[32px] mb-3 ${
+                  className={`${itemClass} text-[28px] sm:text-[32px] mb-3 ${
                     currentSection === section.id ? "underline underline-offset-4 decoration-1" : ""
                   }`}
                 >
                   {section.label}
                 </a>
                 {section.children.length > 0 ? (
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 mt-3">
                     {section.children.map((child) => (
                       <li key={child.id}>
                         <a
                           href={child.href}
                           onClick={close}
-                          className="text-[16px] sm:text-[17px] text-black/70 hover:text-black transition-colors"
+                          className={`${itemClass} text-[16px] sm:text-[17px] ${
+                            childActive(section.id, child.id)
+                              ? "text-black underline underline-offset-4 decoration-1"
+                              : "text-black/70"
+                          }`}
                         >
                           {child.label}
                         </a>
