@@ -7,22 +7,21 @@ type Props = {
 }
 
 export function ScrollRevealText({ text, runwayId }: Props) {
-  const rootRef = useRef<HTMLParagraphElement>(null)
+  const visibleRef = useRef<HTMLSpanElement>(null)
+  const cursorRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    const root = rootRef.current
+    const visible = visibleRef.current
+    const cursor = cursorRef.current
     const runway = document.getElementById(runwayId)
-    if (!root || !runway) return
-    const chars = [...root.querySelectorAll("span")]
+    if (!visible || !cursor || !runway) return
 
     let raf = 0
     const tick = () => {
       const p = runwayProgress(runway)
-      const n = chars.length
-      chars.forEach((el, i) => {
-        const local = Math.min(1, Math.max(0, p * (n + 6) - i))
-        el.style.opacity = String(0.08 + local * 0.92)
-      })
+      const count = Math.min(text.length, Math.max(0, Math.round(p * text.length)))
+      visible.textContent = text.slice(0, count)
+      cursor.style.display = count >= text.length ? "none" : "inline-block"
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
@@ -31,20 +30,20 @@ export function ScrollRevealText({ text, runwayId }: Props) {
 
   return (
     <p
-      ref={rootRef}
-      className="text-black mb-5 sm:mb-6 whitespace-pre-wrap"
+      className="text-black mb-5 sm:mb-6"
       style={{
         fontSize: "clamp(18px, 4vw, 26px)",
         lineHeight: 1.35,
         fontWeight: 400,
-        minHeight: 90,
+        minHeight: "6.2em",
       }}
     >
-      {[...text].map((ch, i) => (
-        <span key={i} style={{ opacity: 0.08 }}>
-          {ch}
-        </span>
-      ))}
+      <span ref={visibleRef} />
+      <span
+        ref={cursorRef}
+        className="cursor-blink inline-block w-[2px] h-[1.1em] bg-black align-middle ml-[2px]"
+        aria-hidden
+      />
     </p>
   )
 }
