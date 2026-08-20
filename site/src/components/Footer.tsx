@@ -10,7 +10,7 @@ export function Footer() {
         className="text-[28px] sm:text-[40px] mb-8"
         style={{ fontFamily: "var(--font-heading)" }}
       >
-        José®
+        José
       </p>
       <div className="flex flex-wrap gap-x-8 gap-y-3 text-[16px] sm:text-[18px]">
         <a href={LINKS.mailto} className="underline underline-offset-2 hover:opacity-60 transition-opacity">

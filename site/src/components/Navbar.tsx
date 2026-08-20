@@ -29,42 +29,35 @@ export function Navbar() {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5 bg-white/75 backdrop-blur-sm">
-        <a href="#top" className="flex flex-row items-center gap-3" onClick={() => setOpen(false)}>
+        <a href="#top" className="flex flex-row items-center" onClick={() => setOpen(false)}>
           <span
             className="text-[21px] sm:text-[26px] tracking-tight text-black"
             style={{ fontFamily: "var(--font-heading)" }}
           >
-            José®
-          </span>
-          <span
-            className="text-[25px] sm:text-[30px] text-black select-none"
-            style={{ letterSpacing: "-0.02em" }}
-            aria-hidden
-          >
-            ✳︎
+            José
           </span>
         </a>
 
-        <div className="hidden md:flex flex-row text-[23px] text-black">
-          {NAV.map((item, i) => (
-            <span key={item.label}>
-              {i > 0 ? <span>, </span> : null}
-              {"external" in item && item.external ? (
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-60 transition-opacity"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <a href={item.href} className="hover:opacity-60 transition-opacity">
-                  {item.label}
-                </a>
-              )}
-            </span>
-          ))}
+        <div className="hidden md:flex flex-row items-center gap-x-[0.7em] text-[23px] text-black">
+          {NAV.map((item, i) => {
+            const label = i < NAV.length - 1 ? `${item.label},` : item.label
+            const cls = "hover:opacity-60 transition-opacity"
+            return "external" in item && item.external ? (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cls}
+              >
+                {label}
+              </a>
+            ) : (
+              <a key={item.label} href={item.href} className={cls}>
+                {label}
+              </a>
+            )
+          })}
         </div>
 
         <a
