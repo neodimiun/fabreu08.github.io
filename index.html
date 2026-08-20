@@ -35,13 +35,12 @@
     body[data-era="2"] { --accent: #b6ff3b; --glow: #3dff7a; }
     body[data-era="3"] { --accent: #00f0ff; --glow: #3b82ff; }
 
-    #webgl, .era-stage, .grade {
+    .era-stage, .grade {
       position: fixed;
       inset: 0;
       pointer-events: none;
     }
     .era-stage { z-index: 0; }
-    #webgl { z-index: 1; }
     .grade {
       z-index: 2;
       background:
@@ -49,7 +48,7 @@
         linear-gradient(180deg, rgba(5,7,10,0.28), transparent 18%, transparent 78%, rgba(5,7,10,0.55));
       transition: background 0.6s ease;
     }
-    .no-webgl #webgl { display: none; }
+
 
     .era-bg, .era-video {
       position: absolute;
@@ -59,13 +58,10 @@
       object-fit: cover;
       opacity: 0;
       will-change: opacity, transform;
-      animation: ken 32s ease-in-out infinite alternate;
+      animation: none;
+      transform: scale(1.02);
     }
     .era-bg.has-video { opacity: 0 !important; }
-    @keyframes ken {
-      from { transform: scale(1.06) translate3d(0,0,0); }
-      to { transform: scale(1.16) translate3d(-2.2%, 1.2%, 0); }
-    }
     @media (prefers-reduced-motion: reduce) {
       .era-bg, .era-video { animation: none; transform: scale(1.06); }
     }
@@ -206,14 +202,6 @@
       }
     }
   </style>
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-      }
-    }
-  </script>
 </head>
 <body data-era="0">
   <div class="progress" id="progress"></div>
@@ -223,7 +211,6 @@
     <img class="era-bg" data-era="2" src="media/era-microbiology.jpg" alt="" />
     <img class="era-bg" data-era="3" src="media/era-cyber.jpg" alt="" />
   </div>
-  <canvas id="webgl" aria-hidden="true"></canvas>
   <div class="grade"></div>
 
   <div class="page">
@@ -383,6 +370,5 @@
     window.addEventListener('resize', onScroll);
     onScroll();
   </script>
-  <script type="module" src="./js/scene.js"></script>
 </body>
 </html>
