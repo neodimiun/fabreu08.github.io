@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
-import { headingActive, SectionStill } from "./SectionStill"
-import { PATH_IMAGES, SECTION_IDS } from "../toc"
+import { headingActive } from "./SectionStill"
+import { SECTION_IDS } from "../toc"
 import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
 
 type Entry = {
@@ -90,40 +90,35 @@ const PATH_IDS = PATH_ITEMS.map((item) => item.id)
 export function Path() {
   const active = useScrollActive(PATH_IDS)
   const sectionOn = useScrollCurrent(SECTION_IDS) === "path"
-  const imageKey = active[active.length - 1] ?? PATH_IDS[0]
-  const image = PATH_IMAGES[imageKey] ?? PATH_IMAGES[PATH_IDS[0]]
 
   return (
     <section id="path" className="relative z-[2] bg-white px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
-      <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_1fr] lg:gap-16">
-        <div>
-          <h2
-            className={`mb-6 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
-            style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
-          >
-            Path &amp; Work
-          </h2>
-          <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mb-14">
-            Every move was made to acquire something specific: a class of methods, a regulatory system, a different kind of accountability. Each one made the next possible.
-          </p>
+      <div className="max-w-3xl">
+        <h2
+          className={`mb-6 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+          style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
+        >
+          Path &amp; Work
+        </h2>
+        <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mb-14">
+          Every move was made to acquire something specific: a class of methods, a regulatory system, a different kind of accountability. Each one made the next possible.
+        </p>
 
-          {PATH_ITEMS.map((item) => (
-            <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-28">
-              <h3
-                className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
-              >
-                {item.title}
-              </h3>
-              {item.meta ? (
-                <p className="text-[14px] sm:text-[15px] text-black/55 mb-4">{item.meta}</p>
-              ) : (
-                <div className="mb-4" />
-              )}
-              <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black">{item.body}</p>
-            </article>
-          ))}
-        </div>
-        <SectionStill src={image} />
+        {PATH_ITEMS.map((item) => (
+          <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-28">
+            <h3
+              className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
+            >
+              {item.title}
+            </h3>
+            {item.meta ? (
+              <p className="text-[14px] sm:text-[15px] text-black/55 mb-4">{item.meta}</p>
+            ) : (
+              <div className="mb-4" />
+            )}
+            <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black">{item.body}</p>
+          </article>
+        ))}
       </div>
     </section>
   )

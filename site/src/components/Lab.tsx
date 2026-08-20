@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
-import { headingActive, SectionStill } from "./SectionStill"
-import { LAB_IMAGES, SECTION_IDS } from "../toc"
+import { headingActive } from "./SectionStill"
+import { SECTION_IDS } from "../toc"
 import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
 
 function Usp({ n }: { n: string }) {
@@ -86,31 +86,26 @@ const LAB_IDS = LAB_ITEMS.map((item) => item.id)
 export function Lab() {
   const active = useScrollActive(LAB_IDS)
   const sectionOn = useScrollCurrent(SECTION_IDS) === "lab"
-  const imageKey = active[active.length - 1] ?? LAB_IDS[0]
-  const image = LAB_IMAGES[imageKey] ?? LAB_IMAGES[LAB_IDS[0]]
 
   return (
     <section id="lab" className="relative z-[2] bg-[#f4f4f4] px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
-      <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_1fr] lg:gap-16">
-        <div>
-          <h2
-            className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
-            style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
-          >
-            Lab Methods
-          </h2>
-          {LAB_ITEMS.map((item) => (
-            <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-28">
-              <h3
-                className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && active.includes(item.id))}`}
-              >
-                {item.title}
-              </h3>
-              <p className="text-[15px] sm:text-[17px] leading-[1.65] text-black">{item.body}</p>
-            </article>
-          ))}
-        </div>
-        <SectionStill src={image} />
+      <div className="max-w-3xl">
+        <h2
+          className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+          style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
+        >
+          Lab Methods
+        </h2>
+        {LAB_ITEMS.map((item) => (
+          <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-28">
+            <h3
+              className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && active.includes(item.id))}`}
+            >
+              {item.title}
+            </h3>
+            <p className="text-[15px] sm:text-[17px] leading-[1.65] text-black">{item.body}</p>
+          </article>
+        ))}
       </div>
     </section>
   )

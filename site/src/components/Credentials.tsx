@@ -1,4 +1,4 @@
-import { headingActive, SectionStill } from "./SectionStill"
+import { headingActive } from "./SectionStill"
 import { SECTION_IDS } from "../toc"
 import { useScrollCurrent } from "../hooks/useScrollCurrent"
 
@@ -19,24 +19,21 @@ export function Credentials() {
       id="credentials"
       className="relative z-[2] bg-white px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32"
     >
-      <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_1fr] lg:gap-16">
-        <div>
-          <h2
-            className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
-            style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
-          >
-            Credentials
-          </h2>
-          <ul className="text-[16px] sm:text-[18px] leading-[1.65] text-black list-disc pl-5 space-y-3">
-            {ITEMS.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-          <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mt-8">
-            English and Spanish, native fluency in both.
-          </p>
-        </div>
-        <SectionStill src="headshot.jpg" />
+      <div className="max-w-3xl">
+        <h2
+          className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+          style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
+        >
+          Credentials
+        </h2>
+        <ul className="text-[16px] sm:text-[18px] leading-[1.65] text-black list-disc pl-5 space-y-3">
+          {ITEMS.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mt-8">
+          English and Spanish, native fluency in both.
+        </p>
       </div>
     </section>
   )
