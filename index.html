@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>José A. Fernández Abreu, M.S.</title>
+  <title>José A. Fernández Abreu, M.S. — M&amp;PT Engineer</title>
+  <meta name="description" content="José A. Fernández Abreu, M.S. — Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems. Chemist and microbiologist applying a decade of regulated laboratory science to aerospace special processes." />
+  <meta name="author" content="José A. Fernández Abreu" />
+  <meta property="og:title" content="José A. Fernández Abreu, M.S. — M&amp;PT Engineer" />
+  <meta property="og:description" content="Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems. A new path from regulated laboratory science into aerospace process engineering." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://joseqc.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
@@ -116,6 +122,35 @@
       background: rgba(251,191,36,0.07);
       border: 1px solid rgba(251,191,36,0.42);
       color: #fbbf24;
+    }
+
+    .path-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-top: 26px;
+    }
+
+    .path-step {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.42);
+    }
+
+    .path-now {
+      color: #fbbf24;
+      border-bottom: 1px solid rgba(251,191,36,0.5);
+      padding-bottom: 2px;
+    }
+
+    .path-arrow {
+      color: rgba(79,195,247,0.5);
+      font-size: 11px;
+      letter-spacing: 0;
     }
 
     .stats-bar {
@@ -402,56 +437,56 @@
                   box-shadow 0.4s ease;
     }
 
-    /* Subtle radiating flow around headshot (very faint breathing glow) */
+    /* Subtle faint flow radiating slowly around headshot (breathing scale + gentle opposite rotation for organic flowing movement; very faint) */
     .headshot::before,
     .headshot::after {
       content: '';
       position: absolute;
-      inset: -28%;
+      inset: -30%;
       border-radius: 50%;
       pointer-events: none;
       mix-blend-mode: screen;
-      opacity: 0.28;
+      opacity: 0.22;
     }
 
     .headshot::before {
-      /* Light blue radiating layer */
+      /* Light blue radiating layer - faint flow */
       background: radial-gradient(
         circle at center,
-        rgba(79, 195, 247, 0.22) 0%,
-        rgba(79, 195, 247, 0.09) 38%,
-        transparent 68%
+        rgba(79, 195, 247, 0.18) 0%,
+        rgba(79, 195, 247, 0.07) 42%,
+        transparent 70%
       );
-      animation: radiate-blue 9.5s ease-in-out infinite;
+      animation: radiate-blue 12.5s ease-in-out infinite;
     }
 
     .headshot::after {
-      /* Gold radiating layer - slight phase offset */
+      /* Gold radiating layer - slight phase offset, opposite rotation for flow */
       background: radial-gradient(
         circle at center,
-        rgba(251, 191, 36, 0.20) 0%,
-        rgba(251, 191, 36, 0.07) 38%,
-        transparent 68%
+        rgba(251, 191, 36, 0.16) 0%,
+        rgba(251, 191, 36, 0.05) 42%,
+        transparent 70%
       );
-      animation: radiate-gold 11s ease-in-out infinite 2.8s;
+      animation: radiate-gold 15s ease-in-out infinite 3.2s;
     }
 
     .headshot:hover {
-      transform: scale(1.04);
+      transform: scale(1.03);
       box-shadow: 
-        0 0 0 7px rgba(79,195,247,0.12),
-        0 0 48px rgba(79,195,247,0.35),
-        0 0 90px rgba(79,195,247,0.18);
+        0 0 0 7px rgba(79,195,247,0.10),
+        0 0 42px rgba(79,195,247,0.30),
+        0 0 80px rgba(79,195,247,0.14);
     }
 
     @keyframes radiate-blue {
-      0%, 100% { transform: scale(0.78); opacity: 0.22; }
-      50% { transform: scale(1.32); opacity: 0.38; }
+      0%, 100% { transform: scale(0.82) rotate(-2.8deg); opacity: 0.16; }
+      50% { transform: scale(1.26) rotate(2.8deg); opacity: 0.30; }
     }
 
     @keyframes radiate-gold {
-      0%, 100% { transform: scale(0.82); opacity: 0.18; }
-      50% { transform: scale(1.26); opacity: 0.35; }
+      0%, 100% { transform: scale(0.85) rotate(3.2deg); opacity: 0.13; }
+      50% { transform: scale(1.22) rotate(-3.2deg); opacity: 0.28; }
     }
 
     .card {
@@ -578,6 +613,8 @@
     max-width: 320px;
     letter-spacing: 1px;
   }
+  .path-row { margin-top: 18px; gap: 6px 8px; }
+  .path-step { font-size: 8px; letter-spacing: 1.2px; }
   .stats-bar { margin: 10px 0 24px; }
   .stat-item { padding: 12px 6px; }
   .bio-section p { font-size: 14px; line-height: 1.55; margin-bottom: 18px; }
@@ -586,8 +623,6 @@
   .cards-section { padding-bottom: 24px; }
   .standards-section { padding-bottom: 30px; }
 }
-
-    }
   </style>
 </head>
 <body>
@@ -598,7 +633,7 @@
       <!-- REPLACE headshot.jpg with your actual image filename or URL -->
       <img src="headshot.jpg" alt="Jose A. Fernandez Abreu" class="headshot" />
       <h1>Jose A. Fernandez Abreu, M.S.</h1>
-      <p class="hero-subtitle">Chemist &middot; Microbiologist &middot; QC Lead</p>
+      <p class="hero-subtitle">M&amp;PT Engineer &middot; Chemist &middot; Microbiologist</p>
       <div class="badge-row">
         <span class="badge badge-blue">
           <i class="fas fa-jet-fighter"></i>
@@ -607,6 +642,13 @@
         <span class="badge badge-gold">
           ★&nbsp; NADCAP Gold Certified
         </span>
+      </div>
+      <div class="path-row" aria-label="Career path">
+        <span class="path-step">Lab Science</span>
+        <span class="path-arrow" aria-hidden="true">&rarr;</span>
+        <span class="path-step">Process Control</span>
+        <span class="path-arrow" aria-hidden="true">&rarr;</span>
+        <span class="path-step path-now">M&amp;PT Engineering</span>
       </div>
     </div>
   </section>
@@ -633,13 +675,13 @@
   <section class="bio-section">
     <div class="container">
       <p>
-        I am a Master's-level Scientist and Compliance Lead with over a decade of experience supporting and overseeing high-volume, regulated laboratory operations across <strong>environmental enforcement</strong>, <strong>pharmaceutical validation</strong>, and <strong>aerospace manufacturing</strong>.
+        I am a <strong>Materials &amp; Process Technology (M&amp;PT) Engineer</strong> at <strong>Collins Aerospace Landing Systems</strong>, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business. This role is a new path in my career: taking a decade of regulated laboratory science into aerospace materials, special processes, and process engineering.
       </p>
       <p class="bio-accent">
-        My work sits at the intersection of complex wet chemistry and regulatory compliance, with deep expertise in <strong>NADCAP, cGMP, EPA, NELAC, and USP</strong> standards. Currently, I apply this expertise at <strong>Collins Aerospace, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business</strong>, within the <strong>Landing Systems</strong> division.
+        My work now sits at the intersection of chemistry, process control, and airworthiness. I support the special processes that protect landing gear in <strong>manufacturing, overhaul, and repair</strong> — coatings and finishes, chemical processing, process qualification, and NADCAP-governed process control — with the same discipline I built in high-volume, audit-ready laboratories.
       </p>
       <p>
-        From overseeing wastewater analysis for municipal clients to conducting <strong>disinfectant validation studies</strong> and environmental monitoring of <strong>ISO 4 cleanrooms</strong> in sterile drug manufacturing, my approach has remained consistent: ensure audit-readiness through <strong>data integrity, traceability, and defensibility</strong>. I am driven by environments where technical precision has direct consequences for safety and operational success, and I remain committed to applying this disciplined methodology to the most demanding challenges in <strong>water management</strong>, <strong>pharmaceutical science</strong>, and <strong>aerospace engineering</strong>.
+        That foundation was built across <strong>environmental enforcement</strong>, <strong>pharmaceutical validation</strong>, and <strong>aerospace manufacturing</strong>. From wastewater analysis for municipal clients to <strong>disinfectant validation studies</strong> and environmental monitoring of <strong>ISO 4 cleanrooms</strong> in sterile drug manufacturing, my approach has stayed consistent: <strong>data integrity, traceability, and defensibility</strong>. I now apply that methodology to process control, shop-floor problem solving, and the materials technology behind mission-critical landing systems.
       </p>
       <p class="bio-accent project-highlight">
         Building <a href="https://immutableqc.com" target="_blank" rel="noopener"><strong>Immutable QC</strong></a> — infrastructure for cryptographically-verifiable laboratory data integrity. Direct instrument integration, tamper-evident audit trails, and regulatory-ready documentation for 21 CFR Part 11 and ISO 17025 environments.
@@ -658,6 +700,11 @@
       <span class="section-label">Areas of Expertise</span>
       <div class="cards-grid">
         <div class="card">
+          <span class="card-icon">⚙️</span>
+          <span class="card-title">Materials &amp; Process Technology</span>
+          <p>Special processes, coatings and finishes, process qualification, and NADCAP chemical processing support for landing gear manufacturing, overhaul, and repair.</p>
+        </div>
+        <div class="card">
           <span class="card-icon">⚗️</span>
           <span class="card-title">Chemistry &amp; Microbiology</span>
           <p>Complex wet chemistry, environmental monitoring, disinfectant validation studies, and ISO 4 cleanroom sampling in sterile drug manufacturing.</p>
@@ -666,11 +713,6 @@
           <span class="card-icon">📋</span>
           <span class="card-title">Regulatory Compliance</span>
           <p>Deep expertise in NADCAP, cGMP, EPA, NELAC, and USP standards. Audit-readiness built on data integrity, traceability, and defensibility.</p>
-        </div>
-        <div class="card">
-          <span class="card-icon">✈️</span>
-          <span class="card-title">Aerospace &amp; Defense</span>
-          <p>Analytical and compliance support for critical defense systems at Collins Aerospace, Landing Systems Division, an RTX business.</p>
         </div>
       </div>
     </div>
@@ -682,12 +724,14 @@
       <span class="section-label">Standards &amp; Certifications</span>
       <div class="tags-row">
         <span class="tag tag-gold">NADCAP Gold</span>
+        <span class="tag tag-gold">AC7108</span>
+        <span class="tag tag-cyan">FAA Part 145</span>
         <span class="tag tag-cyan">cGMP</span>
         <span class="tag tag-cyan">EPA</span>
         <span class="tag tag-cyan">NELAC</span>
         <span class="tag tag-cyan">USP</span>
         <span class="tag tag-cyan">ISO 4</span>
-        <span class="tag tag-cyan">FDA Regulated</span>
+        <span class="tag tag-cyan">Process Control</span>
       </div>
     </div>
   </section>
