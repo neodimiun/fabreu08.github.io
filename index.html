@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>José A. Fernández Abreu, M.S. — M&amp;PT Engineer</title>
-  <meta name="description" content="José A. Fernández Abreu, M.S. — Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems. Chemist and microbiologist applying a decade of regulated laboratory science to aerospace special processes." />
+  <meta name="description" content="José A. Fernández Abreu, M.S. — Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems. A career through aerospace, chemistry, microbiology, and systems." />
   <meta name="author" content="José A. Fernández Abreu" />
   <meta property="og:title" content="José A. Fernández Abreu, M.S. — M&amp;PT Engineer" />
-  <meta property="og:description" content="Materials &amp; Process Technology Engineer at Collins Aerospace Landing Systems. A new path from regulated laboratory science into aerospace process engineering." />
+  <meta property="og:description" content="A scroll-driven career from aerospace materials and process engineering back through chemistry, microbiology, and systems." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://joseqc.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,461 +18,192 @@
     :root {
       --bg: #05070a;
       --ink: #f4f7fb;
-      --muted: rgba(232, 238, 245, 0.68);
-      --blue: #0057b8;
-      --blue-bright: #4ea3e0;
-      --red: #e61231;
-      --steel: #c5cdd6;
-      --gold: #c9a227;
-      --line: rgba(78, 163, 224, 0.22);
-      --panel: rgba(8, 12, 18, 0.72);
+      --muted: rgba(232, 238, 245, 0.72);
+      --accent: #e61231;
+      --glow: #ff5a1f;
+      --line: rgba(255, 255, 255, 0.16);
+      --panel: rgba(5, 7, 10, 0.58);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    html, body { background: var(--bg); color: var(--ink); font-family: 'Source Sans 3', sans-serif; }
+    body { overflow-x: hidden; }
 
-    html, body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'Source Sans 3', sans-serif;
-      min-height: 100%;
-    }
+    body[data-era="0"] { --accent: #e61231; --glow: #ff5a1f; }
+    body[data-era="1"] { --accent: #e0a325; --glow: #2ec4b6; }
+    body[data-era="2"] { --accent: #b6ff3b; --glow: #3dff7a; }
+    body[data-era="3"] { --accent: #00f0ff; --glow: #3b82ff; }
 
-    body {
-      overflow-x: hidden;
-    }
-
-    #webgl {
+    #webgl, .era-stage, .grade {
       position: fixed;
       inset: 0;
-      z-index: 0;
       pointer-events: none;
     }
-
-    .atmosphere {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
+    .era-stage { z-index: 0; }
+    #webgl { z-index: 1; }
+    .grade {
+      z-index: 2;
       background:
-        linear-gradient(90deg, rgba(5, 7, 10, 0.92) 0%, rgba(5, 7, 10, 0.62) 38%, rgba(5, 7, 10, 0.18) 68%, rgba(5, 7, 10, 0.42) 100%),
-        radial-gradient(ellipse at 70% 40%, rgba(0, 87, 184, 0.16), transparent 42%),
-        radial-gradient(ellipse at 88% 18%, rgba(230, 18, 49, 0.12), transparent 34%);
+        linear-gradient(90deg, rgba(5,7,10,0.82) 0%, rgba(5,7,10,0.42) 46%, rgba(5,7,10,0.22) 100%),
+        linear-gradient(180deg, rgba(5,7,10,0.28), transparent 18%, transparent 78%, rgba(5,7,10,0.55));
+      transition: background 0.6s ease;
     }
-
     .no-webgl #webgl { display: none; }
 
-    .no-webgl .atmosphere {
-      background:
-        radial-gradient(ellipse at 70% 30%, rgba(0, 87, 184, 0.22), transparent 46%),
-        linear-gradient(#05070a, #0b1220);
-    }
-
-    .hud-frame {
-      position: fixed;
-      inset: 14px;
-      z-index: 2;
-      pointer-events: none;
-      border: 1px solid rgba(78, 163, 224, 0.16);
-    }
-
-    .hud-frame::before,
-    .hud-frame::after {
-      content: '';
+    .era-bg, .era-video {
       position: absolute;
-      width: 28px;
-      height: 28px;
-      border: 2px solid var(--blue-bright);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      will-change: opacity, transform;
+      animation: ken 32s ease-in-out infinite alternate;
+    }
+    .era-bg.has-video { opacity: 0 !important; }
+    @keyframes ken {
+      from { transform: scale(1.06) translate3d(0,0,0); }
+      to { transform: scale(1.16) translate3d(-2.2%, 1.2%, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .era-bg, .era-video { animation: none; transform: scale(1.06); }
     }
 
-    .hud-frame::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
-    .hud-frame::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
-
-    .page {
-      position: relative;
-      z-index: 3;
-    }
+    .page { position: relative; z-index: 3; }
+    .container { width: min(1100px, calc(100% - 48px)); margin: 0 auto; }
 
     .topbar {
-      border-top: 3px solid var(--red);
-      padding-top: 18px;
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      border-top: 3px solid var(--accent);
+      background: linear-gradient(rgba(5,7,10,0.72), rgba(5,7,10,0.18));
+      backdrop-filter: blur(10px);
+      transition: border-color 0.4s ease;
     }
-
     .topbar-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
+      padding: 14px 0;
     }
-
-    .brand {
+    .brand, .era-chip, .stat-label, .section-label, .path-step, .tag, .footer-inner {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2.4px;
-      text-transform: uppercase;
-      color: var(--steel);
-    }
-
-    .brand span { color: var(--red); margin: 0 8px; }
-
-    .top-links {
-      display: flex;
-      gap: 14px;
-    }
-
-    .top-links a {
-      color: var(--blue-bright);
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border: 1px solid var(--line);
-      background: rgba(5, 7, 10, 0.45);
-      text-decoration: none;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    }
-
-    .top-links a:hover {
-      background: rgba(0, 87, 184, 0.2);
-      border-color: var(--blue-bright);
-      transform: translateY(-2px);
-    }
-
-    .container {
-      width: min(1120px, calc(100% - 48px));
-      margin: 0 auto;
-    }
-
-    .hero {
-      padding: 28px 0 48px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(280px, 520px) 1fr;
-      min-height: calc(100vh - 88px);
-      align-items: center;
-    }
-
-    .hero-visual { min-height: 520px; }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2.6px;
-      text-transform: uppercase;
-      color: var(--blue-bright);
-      margin-bottom: 18px;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 0 0 rgba(230, 18, 49, 0.7);
-      animation: pulse 2.2s ease-out infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(230, 18, 49, 0.55); }
-      70% { box-shadow: 0 0 0 10px rgba(230, 18, 49, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(230, 18, 49, 0); }
-    }
-
-    .headshot-wrap {
-      position: relative;
-      width: 92px;
-      height: 92px;
-      margin-bottom: 22px;
-    }
-
-    .headshot-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border: 1px solid rgba(197, 205, 214, 0.4);
-    }
-
-    .headshot-wrap::before,
-    .headshot-wrap::after {
-      content: '';
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border: 1px solid var(--red);
-    }
-
-    .headshot-wrap::before { top: -4px; left: -4px; border-right: 0; border-bottom: 0; }
-    .headshot-wrap::after { bottom: -4px; right: -4px; border-left: 0; border-top: 0; }
-
-    h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(42px, 7vw, 78px);
-      line-height: 0.92;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(18px, 2.4vw, 26px);
-      font-weight: 500;
-      color: var(--steel);
-      margin-bottom: 28px;
-      max-width: 22ch;
-    }
-
-    .badge-row,
-    .path-row,
-    .tags-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .badge,
-    .tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      color: var(--blue-bright);
-      background: rgba(0, 87, 184, 0.08);
-    }
-
-    .badge-red,
-    .tag-gold {
-      color: var(--gold);
-      border-color: rgba(201, 162, 39, 0.4);
-      background: rgba(201, 162, 39, 0.08);
-    }
-
-    .path-row {
-      align-items: center;
-      margin-top: 22px;
-      gap: 10px 12px;
-    }
-
-    .path-step {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      color: rgba(232, 238, 245, 0.42);
-    }
-
-    .path-now {
-      color: var(--red);
-      border-bottom: 1px solid rgba(230, 18, 49, 0.7);
-      padding-bottom: 2px;
-    }
-
-    .path-arrow { color: var(--blue-bright); }
-
-    .scroll-cue {
-      margin-top: 42px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(232, 238, 245, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .scroll-cue i { animation: bob 1.6s ease-in-out infinite; }
-
-    @keyframes bob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(5px); }
-    }
-
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      margin: 8px 0 56px;
-      background: var(--panel);
-      backdrop-filter: blur(12px);
-    }
-
-    .stat-item {
-      padding: 26px 18px;
-      text-align: left;
-    }
-
-    .stat-item:not(:last-child) {
-      border-right: 1px solid var(--line);
-    }
-
-    .stat-number {
-      display: block;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(32px, 5vw, 48px);
-      line-height: 1;
-      color: var(--ink);
-      margin-bottom: 8px;
-    }
-
-    .stat-gold .stat-number { color: var(--gold); }
-
-    .stat-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
       letter-spacing: 1.8px;
       text-transform: uppercase;
-      color: var(--muted);
     }
-
-    .bio-section,
-    .cards-section,
-    .standards-section {
-      padding-bottom: 64px;
-    }
-
-    .bio-section p {
-      font-size: 17px;
-      line-height: 1.75;
-      color: var(--muted);
-      margin-bottom: 22px;
-      max-width: 68ch;
-    }
-
-    .bio-section p:last-child { margin-bottom: 0; }
-    .bio-section strong { color: var(--ink); font-weight: 600; }
-
-    .bio-section a {
-      color: var(--blue-bright);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(78, 163, 224, 0.35);
-    }
-
-    .bio-accent {
-      border-left: 3px solid var(--red);
-      padding: 14px 0 14px 22px;
-      background: linear-gradient(90deg, rgba(230, 18, 49, 0.08), transparent 70%);
-    }
-
-    .section-label {
-      font-family: 'IBM Plex Mono', monospace;
+    .brand { font-size: 11px; color: #c5cdd6; }
+    .brand b { color: var(--accent); font-weight: 500; }
+    .era-chip {
       font-size: 11px;
-      letter-spacing: 2.4px;
+      color: var(--glow);
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      padding: 6px 10px;
+    }
+    .top-links { display: flex; gap: 10px; }
+    .top-links a {
+      width: 34px; height: 34px; display: grid; place-items: center;
+      color: var(--ink); border: 1px solid var(--line); text-decoration: none;
+      background: rgba(5,7,10,0.4);
+    }
+    .top-links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    .progress {
+      position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 9;
+      background: var(--accent); transform-origin: 0 50%; transform: scaleX(0);
+    }
+
+    .chapter {
+      min-height: 115vh;
+      display: flex;
+      align-items: center;
+      padding: 72px 0;
+    }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      letter-spacing: 2.4px; text-transform: uppercase; color: var(--glow);
+      margin-bottom: 16px;
+    }
+    .live-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent);
+      animation: pulse 2.2s ease-out infinite;
+    }
+    @keyframes pulse {
+      70% { box-shadow: 0 0 0 10px transparent; }
+    }
+    .headshot-wrap { width: 88px; height: 88px; position: relative; margin-bottom: 20px; }
+    .headshot-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid rgba(255,255,255,0.35); }
+    .headshot-wrap::before, .headshot-wrap::after {
+      content: ''; position: absolute; width: 12px; height: 12px; border: 1px solid var(--accent);
+    }
+    .headshot-wrap::before { top: -4px; left: -4px; border-right: 0; border-bottom: 0; }
+    .headshot-wrap::after { right: -4px; bottom: -4px; border-left: 0; border-top: 0; }
+
+    .chapter h1, .chapter h2 {
+      font-family: 'Barlow Condensed', sans-serif;
       text-transform: uppercase;
-      color: var(--blue-bright);
-      margin-bottom: 18px;
-      display: block;
+      line-height: 0.9;
+      letter-spacing: 0.4px;
     }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+    .chapter h1 { font-size: clamp(46px, 8vw, 86px); margin-bottom: 12px; }
+    .chapter h2 { font-size: clamp(40px, 7vw, 74px); margin-bottom: 10px; }
+    .lede {
+      font-size: clamp(18px, 2.3vw, 26px);
+      color: #d5dde6;
+      max-width: 22ch;
+      margin-bottom: 22px;
     }
-
-    .card {
+    .copy {
+      max-width: 62ch;
       background: var(--panel);
       border: 1px solid var(--line);
-      padding: 26px 22px;
+      border-left: 3px solid var(--accent);
+      padding: 22px 22px 22px 24px;
       backdrop-filter: blur(14px);
-      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     }
+    .copy p { font-size: 17px; line-height: 1.7; color: var(--muted); margin-bottom: 16px; }
+    .copy p:last-child { margin-bottom: 0; }
+    .copy strong { color: var(--ink); }
+    .copy a { color: var(--glow); }
 
-    .card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(78, 163, 224, 0.55);
-      background: rgba(8, 16, 28, 0.82);
+    .badge-row, .path-row, .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .badge, .tag {
+      font-size: 10px; padding: 7px 11px;
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, white 10%);
+      color: var(--glow);
     }
+    .path-step { font-size: 10px; color: rgba(255,255,255,0.45); }
+    .path-now { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+    .path-arrow { color: var(--glow); }
 
-    .card-icon {
-      color: var(--red);
-      font-size: 18px;
-      margin-bottom: 16px;
-      display: block;
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      margin-top: 28px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
     }
+    .stat-item { padding: 18px 12px 18px 0; }
+    .stat-number { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 42px; line-height: 1; }
+    .stat-label { font-size: 10px; color: var(--muted); }
 
-    .card-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 20px;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .card p {
-      font-size: 15px;
-      line-height: 1.65;
-      color: var(--muted);
-    }
-
-    .standards-section { padding-bottom: 80px; }
-
-    .tag { cursor: default; }
-    .tag-cyan { color: var(--blue-bright); }
-    .tag:hover { background: rgba(0, 87, 184, 0.18); }
-
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 28px 0 36px;
-      color: rgba(232, 238, 245, 0.38);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #05070a; }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(var(--blue), var(--red));
-    }
+    footer { padding: 28px 0 40px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 12px; font-size: 10px; color: rgba(255,255,255,0.4); }
 
     @media (prefers-reduced-motion: reduce) {
-      .fade-in, .card, .scroll-cue i, .live-dot { animation: none; transition: none; opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+      .live-dot, .no-webgl .era-bg.is-on { animation: none; }
     }
-
     @media (max-width: 860px) {
-      .hero-grid { grid-template-columns: 1fr; min-height: auto; }
-      .hero-visual { display: none; }
-      .atmosphere {
-        background:
-          linear-gradient(180deg, rgba(5, 7, 10, 0.46) 0%, rgba(5, 7, 10, 0.88) 42%, rgba(5, 7, 10, 0.96) 100%),
-          radial-gradient(ellipse at 50% 12%, rgba(0, 87, 184, 0.22), transparent 48%);
+      .container { width: min(1100px, calc(100% - 28px)); }
+      .chapter { min-height: auto; padding: 56px 0 72px; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .era-chip { display: none; }
+      .footer-inner { flex-direction: column; }
+      .grade {
+        background: linear-gradient(180deg, rgba(5,7,10,0.35), rgba(5,7,10,0.82) 40%, rgba(5,7,10,0.9));
       }
-      .cards-grid, .stats-bar { grid-template-columns: 1fr; }
-      .stat-item:not(:last-child) { border-right: 0; border-bottom: 1px solid var(--line); }
-      .container { width: min(1120px, calc(100% - 32px)); }
-      h1 { font-size: 44px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .hud-frame { inset: 8px; }
     }
   </style>
   <script type="importmap">
@@ -484,15 +215,22 @@
     }
   </script>
 </head>
-<body>
+<body data-era="0">
+  <div class="progress" id="progress"></div>
+  <div class="era-stage" aria-hidden="true">
+    <img class="era-bg is-on" data-era="0" src="media/era-aerospace.jpg" alt="" />
+    <img class="era-bg" data-era="1" src="media/era-chemistry.jpg" alt="" />
+    <img class="era-bg" data-era="2" src="media/era-microbiology.jpg" alt="" />
+    <img class="era-bg" data-era="3" src="media/era-cyber.jpg" alt="" />
+  </div>
   <canvas id="webgl" aria-hidden="true"></canvas>
-  <div class="atmosphere"></div>
-  <div class="hud-frame" aria-hidden="true"></div>
+  <div class="grade"></div>
 
   <div class="page">
     <header class="topbar">
       <div class="container topbar-inner">
-        <div class="brand">JFA <span>/</span> M&amp;PT Engineer</div>
+        <div class="brand">JFA <b>/</b> Career Path</div>
+        <div class="era-chip" id="eraChip">01 · Aerospace</div>
         <nav class="top-links" aria-label="Contact">
           <a href="https://drive.google.com/file/d/1FQXbq30I5GoH5onZDLqftWZvv_B0Z43d/view" target="_blank" rel="noopener" title="Download CV"><i class="fas fa-file-lines"></i></a>
           <a href="mailto:jose@joseqc.com" title="Email"><i class="fas fa-envelope"></i></a>
@@ -502,100 +240,74 @@
       </div>
     </header>
 
-    <section class="hero">
-      <div class="container hero-grid">
-      <div class="hero-copy">
-        <div class="kicker"><span class="live-dot"></span> Collins Aerospace · Landing Systems</div>
-        <div class="headshot-wrap">
-          <img src="headshot.jpg" alt="Jose A. Fernandez Abreu" />
-        </div>
-        <h1>Jose A. Fernandez Abreu, M.S.</h1>
-        <p class="hero-subtitle">Materials &amp; Process Technology Engineer</p>
-        <div class="badge-row">
-          <span class="badge">Chemist · Microbiologist</span>
-          <span class="badge badge-red">NADCAP Gold Certified</span>
+    <section class="chapter" data-era="0" id="aerospace">
+      <div class="container">
+        <div class="kicker"><span class="live-dot"></span> Now · Collins Aerospace · Landing Systems</div>
+        <div class="headshot-wrap"><img src="headshot.jpg" alt="Jose A. Fernandez Abreu" /></div>
+        <h1>Aerospace</h1>
+        <p class="lede">Materials &amp; Process Technology Engineer</p>
+        <div class="copy">
+          <p>I am a <strong>Materials &amp; Process Technology (M&amp;PT) Engineer</strong> at <strong>Collins Aerospace Landing Systems</strong>, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business. This is a new path: a decade of regulated laboratory science, now applied to aerospace materials, special processes, and process engineering.</p>
+          <p>The work sits at the intersection of chemistry, process control, and airworthiness — coatings and finishes, chemical processing, process qualification, and NADCAP-governed control for landing gear in manufacturing, overhaul, and repair.</p>
         </div>
         <div class="path-row" aria-label="Career path">
-          <span class="path-step">Lab Science</span>
-          <span class="path-arrow" aria-hidden="true">&rarr;</span>
-          <span class="path-step">Process Control</span>
-          <span class="path-arrow" aria-hidden="true">&rarr;</span>
-          <span class="path-step path-now">M&amp;PT Engineering</span>
+          <span class="path-step path-now">M&amp;PT</span>
+          <span class="path-arrow">&rarr;</span>
+          <span class="path-step">Chemistry</span>
+          <span class="path-arrow">&rarr;</span>
+          <span class="path-step">Microbiology</span>
+          <span class="path-arrow">&rarr;</span>
+          <span class="path-step">Systems</span>
         </div>
-        <div class="scroll-cue">Inspect process <i class="fas fa-chevron-down"></i></div>
-      </div>
-      <div class="hero-visual" aria-hidden="true"></div>
-      </div>
-    </section>
-
-    <div class="container">
-      <div class="stats-bar">
-        <div class="stat-item">
-          <span class="stat-number">10+</span>
-          <span class="stat-label">Years Experience</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">3</span>
-          <span class="stat-label">Regulated Industries</span>
-        </div>
-        <div class="stat-item stat-gold">
-          <span class="stat-number">GOLD</span>
-          <span class="stat-label">NADCAP Certified</span>
-        </div>
-      </div>
-    </div>
-
-    <section class="bio-section">
-      <div class="container">
-        <span class="section-label">Profile</span>
-        <p>
-          I am a <strong>Materials &amp; Process Technology (M&amp;PT) Engineer</strong> at <strong>Collins Aerospace Landing Systems</strong>, an <a href="https://www.rtx.com/who-we-are/we-are-rtx" target="_blank" rel="noopener">RTX</a> business. This role is a new path in my career: taking a decade of regulated laboratory science into aerospace materials, special processes, and process engineering.
-        </p>
-        <p class="bio-accent">
-          My work now sits at the intersection of chemistry, process control, and airworthiness. I support the special processes that protect landing gear in <strong>manufacturing, overhaul, and repair</strong> — coatings and finishes, chemical processing, process qualification, and NADCAP-governed process control — with the same discipline I built in high-volume, audit-ready laboratories.
-        </p>
-        <p>
-          That foundation was built across <strong>environmental enforcement</strong>, <strong>pharmaceutical validation</strong>, and <strong>aerospace manufacturing</strong>. From wastewater analysis for municipal clients to <strong>disinfectant validation studies</strong> and environmental monitoring of <strong>ISO 4 cleanrooms</strong> in sterile drug manufacturing, my approach has stayed consistent: <strong>data integrity, traceability, and defensibility</strong>. I now apply that methodology to process control, shop-floor problem solving, and the materials technology behind mission-critical landing systems.
-        </p>
-      </div>
-    </section>
-
-    <section class="cards-section">
-      <div class="container">
-        <span class="section-label">Areas of Expertise</span>
-        <div class="cards-grid">
-          <article class="card">
-            <span class="card-icon"><i class="fas fa-gears"></i></span>
-            <span class="card-title">Materials &amp; Process Technology</span>
-            <p>Special processes, coatings and finishes, process qualification, and NADCAP chemical processing support for landing gear manufacturing, overhaul, and repair.</p>
-          </article>
-          <article class="card">
-            <span class="card-icon"><i class="fas fa-flask"></i></span>
-            <span class="card-title">Chemistry &amp; Microbiology</span>
-            <p>Complex wet chemistry, environmental monitoring, disinfectant validation studies, and ISO 4 cleanroom sampling in sterile drug manufacturing.</p>
-          </article>
-          <article class="card">
-            <span class="card-icon"><i class="fas fa-clipboard-check"></i></span>
-            <span class="card-title">Regulatory Compliance</span>
-            <p>Deep expertise in NADCAP, cGMP, EPA, NELAC, and USP standards. Audit-readiness built on data integrity, traceability, and defensibility.</p>
-          </article>
+        <div class="stats-bar">
+          <div class="stat-item"><span class="stat-number">10+</span><span class="stat-label">Years Experience</span></div>
+          <div class="stat-item"><span class="stat-number">4</span><span class="stat-label">Career Chapters</span></div>
+          <div class="stat-item"><span class="stat-number">GOLD</span><span class="stat-label">NADCAP Certified</span></div>
         </div>
       </div>
     </section>
 
-    <section class="standards-section">
+    <section class="chapter" data-era="1" id="chemistry">
       <div class="container">
-        <span class="section-label">Standards &amp; Certifications</span>
+        <div class="kicker">02 · Wet chemistry · EPA / USP</div>
+        <h2>Chemistry</h2>
+        <p class="lede">Flasks, titrations, crystals, defensible data.</p>
+        <div class="copy">
+          <p>Before aerospace, I spent years in high-volume <strong>wet chemistry</strong> — environmental enforcement and pharmaceutical laboratories — where titration, ion chromatography, spectroscopy, and chain-of-custody were the job.</p>
+          <p>From municipal wastewater analysis to pharmaceutical-grade water systems, the method never changed: if the chemistry is not documented, it did not happen. That discipline is what I now bring to process baths and special-process control.</p>
+        </div>
         <div class="tags-row">
-          <span class="tag tag-gold">NADCAP Gold</span>
-          <span class="tag tag-gold">AC7108</span>
-          <span class="tag tag-cyan">FAA Part 145</span>
-          <span class="tag tag-cyan">cGMP</span>
-          <span class="tag tag-cyan">EPA</span>
-          <span class="tag tag-cyan">NELAC</span>
-          <span class="tag tag-cyan">USP</span>
-          <span class="tag tag-cyan">ISO 4</span>
-          <span class="tag tag-cyan">Process Control</span>
+          <span class="tag">EPA</span><span class="tag">USP</span><span class="tag">NELAC</span><span class="tag">cGMP</span><span class="tag">Titrations</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" data-era="2" id="microbiology">
+      <div class="container">
+        <div class="kicker">03 · M.S. Microbiology · Cleanrooms</div>
+        <h2>Microbiology</h2>
+        <p class="lede">Cells, colonies, ISO 4, validation studies.</p>
+        <div class="copy">
+          <p>I am a Master’s-level <strong>microbiologist</strong> (University of Florida). In sterile-drug manufacturing I executed disinfectant efficacy studies, environmental monitoring in <strong>ISO 4 cleanrooms</strong>, endotoxin testing, and microbial identification.</p>
+          <p>Microbiology taught me to treat invisible risk as engineering: sampling plans, contact times, isolates, and a report that will stand in an audit. The same posture now sits behind process control on the floor.</p>
+        </div>
+        <div class="tags-row">
+          <span class="tag">ISO 4</span><span class="tag">USP &lt;85&gt;</span><span class="tag">EM</span><span class="tag">Validation</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" data-era="3" id="cyber">
+      <div class="container">
+        <div class="kicker">04 · Systems · Networks · Data integrity</div>
+        <h2>IT / Cyber</h2>
+        <p class="lede">Infrastructure first. Traceability always.</p>
+        <div class="copy">
+          <p>The first professional chapter was <strong>information systems</strong>: hardware, networks, diagnostics, and keeping production systems alive. That is where I learned that a process is only as good as the record it leaves behind.</p>
+          <p>I still think like that — laboratory LIMS, process software, audit trails. Data integrity is not a slogan. It is the same systems instinct, applied to chemistry, microbiology, and now aerospace special processes.</p>
+        </div>
+        <div class="tags-row">
+          <span class="tag">Systems</span><span class="tag">Networks</span><span class="tag">LIMS</span><span class="tag">Traceability</span>
         </div>
       </div>
     </section>
@@ -603,52 +315,73 @@
     <footer>
       <div class="container footer-inner">
         <span>&copy; 2026 Jose A. Fernandez Abreu</span>
-        <span>joseqc.com · Landing Systems</span>
+        <span>joseqc.com · Scroll the path</span>
       </div>
     </footer>
   </div>
 
   <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+    const LABELS = ['01 · Aerospace', '02 · Chemistry', '03 · Microbiology', '04 · IT / Cyber'];
+    const chapters = [...document.querySelectorAll('.chapter')];
+    const chip = document.getElementById('eraChip');
+    const progress = document.getElementById('progress');
+    window.__era = { index: 0, mix: 0, progress: 0 };
+
+    function attachVideos() {
+      ['aerospace', 'chemistry', 'microbiology', 'cyber'].forEach((id, i) => {
+        const src = `media/era-${id}.mp4`;
+        fetch(src, { method: 'HEAD' }).then((res) => {
+          if (!res.ok) return;
+          const video = document.createElement('video');
+          video.className = 'era-video';
+          video.muted = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.setAttribute('data-era', String(i));
+          video.src = src;
+          video.addEventListener('canplay', () => {
+            video.classList.add('ready');
+            document.querySelector(`.era-bg[data-era="${i}"]`)?.classList.add('has-video');
+            video.play().catch(() => {});
+            syncLayers();
+          });
+          document.querySelector('.era-stage').appendChild(video);
+        }).catch(() => {});
       });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.bio-section, .cards-section, .standards-section, .stats-bar').forEach((el) => {
-      el.classList.add('fade-in');
-      observer.observe(el);
-    });
-
-    function animateValue(el, start, end, duration, suffix) {
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) return;
-      let startTime = null;
-      function step(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const progress = Math.min((timestamp - startTime) / duration, 1);
-        el.textContent = Math.floor(start + (end - start) * progress) + suffix;
-        if (progress < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
     }
 
-    const statsBar = document.querySelector('.stats-bar');
-    const statsObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        document.querySelectorAll('.stat-number').forEach((stat) => {
-          const text = stat.textContent.trim();
-          if (text === '10+') animateValue(stat, 0, 10, 1200, '+');
-          if (text === '3') animateValue(stat, 0, 3, 900, '');
-        });
-        statsObserver.disconnect();
+    function syncLayers() {
+      const pos = (window.__era.index || 0) + (window.__era.mix || 0);
+      document.querySelectorAll('.era-bg, .era-video').forEach((el) => {
+        const idx = Number(el.dataset.era);
+        const dist = Math.abs(pos - idx);
+        let opacity = Math.max(0, 1 - dist);
+        if (el.tagName === 'VIDEO' && !el.classList.contains('ready')) opacity = 0;
+        if (el.classList.contains('has-video')) opacity = 0;
+        el.style.opacity = String(opacity);
+        if (el.tagName === 'VIDEO' && opacity > 0.05) el.play().catch(() => {});
       });
-    }, { threshold: 0.5 });
-    if (statsBar) statsObserver.observe(statsBar);
+    }
+
+    function onScroll() {
+      const y = window.scrollY;
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const p = Math.min(1, Math.max(0, y / max));
+      progress.style.transform = `scaleX(${p})`;
+      const scaled = p * (chapters.length - 1);
+      const index = Math.min(chapters.length - 1, Math.floor(scaled + 1e-6));
+      const mix = Math.min(1, Math.max(0, scaled - index));
+      window.__era = { index, mix, progress: p };
+      const label = Math.round(scaled);
+      document.body.dataset.era = String(label);
+      if (chip) chip.textContent = LABELS[label];
+      syncLayers();
+    }
+
+    attachVideos();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
   </script>
   <script type="module" src="./js/scene.js"></script>
 </body>
