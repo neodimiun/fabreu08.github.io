@@ -73,4 +73,13 @@ export const LAB_IMAGES: Record<string, string> = {
   "lab-12": "media/obj-aerospace.jpg",
 }
 
+export const LAB_DISCIPLINES: { label: string; ids: string[] }[] = [
+  { label: "Aerospace", ids: ["lab-0", "lab-1"] },
+  { label: "Environmental", ids: ["lab-2", "lab-3", "lab-4", "lab-5", "lab-6", "lab-7", "lab-8"] },
+  { label: "Pharmaceutical", ids: ["lab-9"] },
+  { label: "Molecular biology", ids: ["lab-10"] },
+  { label: "Systems", ids: ["lab-11", "lab-12"] },
+]
+
 export const SECTION_IDS = ["path", "lab", "credentials", "contact"] as const
+

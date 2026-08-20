@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { headingActive } from "./SectionStill"
+import { PathTimeline, yearFromMeta } from "./PathTimeline"
 import { SECTION_IDS } from "../toc"
 import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
 
@@ -72,6 +73,7 @@ const PATH_ITEMS = [
   ...ENTRIES.map((entry, i) => ({
     id: `path-${i}`,
     label: railLabel(entry.title),
+    year: yearFromMeta(entry.meta),
     title: entry.title,
     meta: entry.meta,
     body: entry.body,
@@ -79,6 +81,7 @@ const PATH_ITEMS = [
   {
     id: "path-line",
     label: "The line through it",
+    year: "",
     title: "The line through it",
     meta: "",
     body: "Environmental work taught volume and defensibility. Pharmaceutical work taught validation. Aerospace asks for both and adds a consequence I like: the part I sign off on has to land. Run the method, own the method, own the process the method protects.",
@@ -93,32 +96,35 @@ export function Path() {
 
   return (
     <section id="path" className="relative z-[2] bg-white px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
-      <div className="max-w-3xl">
-        <h2
-          className={`mb-6 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
-          style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
-        >
-          Path &amp; Work
-        </h2>
-        <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mb-14">
-          Every move was made to acquire something specific: a class of methods, a regulatory system, a different kind of accountability. Each one made the next possible.
-        </p>
+      <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_minmax(15rem,1fr)] lg:gap-16">
+        <div>
+          <h2
+            className={`mb-6 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
+          >
+            Path &amp; Work
+          </h2>
+          <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mb-14">
+            Every move was made to acquire something specific: a class of methods, a regulatory system, a different kind of accountability. Each one made the next possible.
+          </p>
 
-        {PATH_ITEMS.map((item) => (
-          <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-28">
-            <h3
-              className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
-            >
-              {item.title}
-            </h3>
-            {item.meta ? (
-              <p className="text-[14px] sm:text-[15px] text-black/55 mb-4">{item.meta}</p>
-            ) : (
-              <div className="mb-4" />
-            )}
-            <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black">{item.body}</p>
-          </article>
-        ))}
+          {PATH_ITEMS.map((item) => (
+            <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-28">
+              <h3
+                className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
+              >
+                {item.title}
+              </h3>
+              {item.meta ? (
+                <p className="text-[14px] sm:text-[15px] text-black/55 mb-4">{item.meta}</p>
+              ) : (
+                <div className="mb-4" />
+              )}
+              <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black">{item.body}</p>
+            </article>
+          ))}
+        </div>
+        <PathTimeline items={PATH_ITEMS} activeIds={sectionOn ? active : []} />
       </div>
     </section>
   )

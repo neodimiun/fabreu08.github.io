@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { headingActive } from "./SectionStill"
+import { LabRail } from "./LabRail"
 import { SECTION_IDS } from "../toc"
 import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
 
@@ -89,23 +90,26 @@ export function Lab() {
 
   return (
     <section id="lab" className="relative z-[2] bg-[#f4f4f4] px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
-      <div className="max-w-3xl">
-        <h2
-          className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
-          style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
-        >
-          Lab Methods
-        </h2>
-        {LAB_ITEMS.map((item) => (
-          <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-28">
-            <h3
-              className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && active.includes(item.id))}`}
-            >
-              {item.title}
-            </h3>
-            <p className="text-[15px] sm:text-[17px] leading-[1.65] text-black">{item.body}</p>
-          </article>
-        ))}
+      <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_minmax(15rem,1fr)] lg:gap-16">
+        <div>
+          <h2
+            className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
+          >
+            Lab Methods
+          </h2>
+          {LAB_ITEMS.map((item) => (
+            <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-28">
+              <h3
+                className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && active.includes(item.id))}`}
+              >
+                {item.title}
+              </h3>
+              <p className="text-[15px] sm:text-[17px] leading-[1.65] text-black">{item.body}</p>
+            </article>
+          ))}
+        </div>
+        <LabRail activeIds={sectionOn ? active : []} />
       </div>
     </section>
   )
