@@ -85,6 +85,29 @@ export function initDrawers() {
   const title = document.getElementById('drawerTitle');
   const body = document.getElementById('drawerBody');
   const drawers = {
+    profile: {
+      title: 'Profile',
+      html: `<p class="sub">José A. Fernández Abreu, M.S.</p>
+        <h3>Aerospace</h3>
+        <p>Materials &amp; Process Technology (M&amp;PT) Engineer at Collins Aerospace Landing Systems, an RTX business. A decade of regulated laboratory science, now applied to aerospace materials, special processes, and process engineering.</p>
+        <p>Coatings and finishes, chemical processing, process qualification, and NADCAP-governed control for landing gear in manufacturing, overhaul, and repair.</p>
+        <ul><li>NADCAP Gold</li><li>AC7108</li><li>FAA Part 145</li></ul>
+        <h3>Chemistry</h3>
+        <p>Years in high-volume wet chemistry — environmental enforcement and pharmaceutical laboratories — where titration, ion chromatography, spectroscopy, and chain-of-custody were the job. If the chemistry is not documented, it did not happen.</p>
+        <ul><li>EPA</li><li>USP</li><li>NELAC</li><li>cGMP</li></ul>
+        <h3>Microbiology</h3>
+        <p>Master’s-level microbiologist (University of Florida). In sterile-drug manufacturing: disinfectant efficacy studies, ISO 4 environmental monitoring, endotoxin testing, and isolate identification.</p>
+        <ul><li>ISO 4</li><li>USP &lt;85&gt;</li><li>EM</li></ul>
+        <h3>Systems</h3>
+        <p>The first professional chapter was information systems: hardware, networks, diagnostics. A process is only as good as the record it leaves behind. That instinct now sits under LIMS, process software, and special-process control.</p>
+        <ul><li>Networks</li><li>LIMS</li><li>Traceability</li></ul>
+        <p class="contact-row">
+          <a href="mailto:jose@joseqc.com">jose@joseqc.com</a><br />
+          <a href="https://www.linkedin.com/in/jf42/" target="_blank" rel="noopener">LinkedIn</a> ·
+          <a href="https://github.com/fabreu08" target="_blank" rel="noopener">GitHub</a> ·
+          <a href="https://drive.google.com/file/d/1FQXbq30I5GoH5onZDLqftWZvv_B0Z43d/view" target="_blank" rel="noopener">CV</a>
+        </p>`,
+    },
     aerospace: {
       title: 'Aerospace',
       html: `<p class="sub">Now · Collins Aerospace · Landing Systems</p>
