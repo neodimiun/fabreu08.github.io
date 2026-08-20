@@ -17,9 +17,9 @@ export function Credentials() {
   return (
     <section
       id="credentials"
-      className="relative z-[2] bg-white px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32"
+      className="relative z-[2] bg-white px-[calc(1.25rem*1.1)] sm:px-[calc(2rem*1.1)] md:px-[calc(2.5rem*1.1)] pt-28 pb-24 sm:pt-36 sm:pb-32"
     >
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="max-w-[43.2rem] mx-auto text-center">
         <h2
           className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
           style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}

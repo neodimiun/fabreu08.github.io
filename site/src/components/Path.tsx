@@ -53,7 +53,7 @@ const ENTRIES: Entry[] = [
   },
   {
     title: "Collins Aerospace · Chemical Process Laboratory",
-    meta: "Opa-Locka, FL · 2025–2026",
+    meta: "Opa-Locka, FL · 2026",
     body: "The deliberate turn. Everywhere else the solution in front of me was the sample. Here it is the tool: a bath whose concentration decides whether a landing gear component is airworthy. Tested process solutions against specification and control schedule, trended critical parameters, and evaluated trivalent chromium and iron after dummying. Owned the TrueChem record, calibration and standards, and controlled documents. Supported Nadcap, customer, and internal audits. Held stop-work authority on specification violations, and used it.",
   },
   {
@@ -64,16 +64,21 @@ const ENTRIES: Entry[] = [
 ]
 
 function railLabel(title: string) {
-  if (title.startsWith("Collins Aerospace · ")) return title.slice("Collins Aerospace · ".length)
+  if (title.startsWith("Collins Aerospace")) return title
   const cut = title.indexOf(" · ")
   return cut === -1 ? title : title.slice(0, cut)
+}
+
+function railYear(title: string, meta: string) {
+  if (title.startsWith("Collins Aerospace")) return "2026"
+  return yearFromMeta(meta)
 }
 
 const PATH_ITEMS = [
   ...ENTRIES.map((entry, i) => ({
     id: `path-${i}`,
     label: railLabel(entry.title),
-    year: yearFromMeta(entry.meta),
+    year: railYear(entry.title, entry.meta),
     title: entry.title,
     meta: entry.meta,
     body: entry.body,

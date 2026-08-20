@@ -48,7 +48,7 @@ export function Navbar() {
           <img
             src={`${import.meta.env.BASE_URL}home-mark.png`}
             alt=""
-            className="h-8 sm:h-9 w-auto"
+            className="h-[35px] sm:h-10 w-auto"
           />
         </a>
 

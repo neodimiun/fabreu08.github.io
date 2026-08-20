@@ -16,8 +16,8 @@ export const PATH_TOC: MenuLink[] = [
   { id: "path-4", href: "#path-4", label: "City of Boca Raton" },
   { id: "path-5", href: "#path-5", label: "Aveva Drug Delivery Systems" },
   { id: "path-6", href: "#path-6", label: "South Florida Water Management District" },
-  { id: "path-7", href: "#path-7", label: "Chemical Process Laboratory" },
-  { id: "path-8", href: "#path-8", label: "Senior Engineer, Materials & Process Technologies" },
+  { id: "path-7", href: "#path-7", label: "Collins Aerospace · Chemical Process Laboratory" },
+  { id: "path-8", href: "#path-8", label: "Collins Aerospace · Senior Engineer, Materials & Process Technologies" },
   { id: "path-line", href: "#path-line", label: "The line through it" },
 ]
 
