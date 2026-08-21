@@ -89,17 +89,17 @@ export function Lab() {
   const sectionOn = useScrollCurrent(SECTION_IDS) === "lab"
 
   return (
-    <section id="lab" className="relative z-[2] bg-[#f4f4f4] px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
+    <section id="lab" className="relative z-[2] bg-[#f4f4f4] px-5 sm:px-8 md:px-10 pt-16 pb-20 sm:pt-20 sm:pb-24">
       <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_minmax(15rem,1fr)] lg:gap-16">
         <div>
           <h2
-            className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+            className={`mb-8 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
             style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
           >
             Lab Methods
           </h2>
           {LAB_ITEMS.map((item) => (
-            <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-28">
+            <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-20">
               <h3
                 className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && active.includes(item.id))}`}
               >

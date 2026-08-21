@@ -7,7 +7,7 @@ type Item = {
 export function PathTimeline({ items, activeIds }: { items: Item[]; activeIds: string[] }) {
   return (
     <aside className="hidden lg:block relative">
-      <div className="sticky top-28">
+      <div className="sticky top-20">
         <div className="relative ml-1 border-l border-black/20">
           {items.map((item) => {
             const on = activeIds.includes(item.id)

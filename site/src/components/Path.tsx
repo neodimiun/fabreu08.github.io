@@ -100,11 +100,11 @@ export function Path() {
   const sectionOn = useScrollCurrent(SECTION_IDS) === "path"
 
   return (
-    <section id="path" className="relative z-[2] bg-white px-5 sm:px-8 md:px-10 pt-28 pb-24 sm:pt-36 sm:pb-32">
+    <section id="path" className="relative z-[2] bg-white px-5 sm:px-8 md:px-10 pt-16 pb-20 sm:pt-20 sm:pb-24">
       <div className="max-w-[1200px] mx-auto lg:grid lg:grid-cols-[minmax(0,38rem)_minmax(15rem,1fr)] lg:gap-16">
         <div>
           <h2
-            className={`mb-6 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+            className={`mb-8 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
             style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
           >
             Path &amp; Work
@@ -114,7 +114,7 @@ export function Path() {
           </p>
 
           {PATH_ITEMS.map((item) => (
-            <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-28">
+            <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-20">
               <h3
                 className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
               >

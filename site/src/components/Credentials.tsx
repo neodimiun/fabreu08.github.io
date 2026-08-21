@@ -17,11 +17,11 @@ export function Credentials() {
   return (
     <section
       id="credentials"
-      className="relative z-[2] bg-white px-[1.125rem] sm:px-[1.8rem] md:px-[2.25rem] pt-28 pb-24 sm:pt-36 sm:pb-32"
+      className="relative z-[2] bg-white px-[1.125rem] sm:px-[1.8rem] md:px-[2.25rem] pt-16 pb-20 sm:pt-20 sm:pb-24"
     >
       <div className="max-w-[1200px] mx-auto text-center">
         <h2
-          className={`mb-10 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
+          className={`mb-8 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
           style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
         >
           Credentials
