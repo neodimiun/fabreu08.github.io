@@ -2,7 +2,7 @@ import { Background } from "./Background"
 import { ScrollRevealText } from "./ScrollRevealText"
 
 const OPENING =
-  "Ten years spent where a measurement becomes a decision: a commercial environmental lab, a municipal wastewater plant, a pharmaceutical cleanroom, a landing gear plant. The setting changes. The question does not. Is this number true, and what has to happen because of it?"
+  "Environmental chemistry, municipal water quality, sterile pharmaceutical manufacturing, aerospace MRO. Eleven years, one question. Is this number true, and what has to happen because of it?"
 
 export function Hero() {
   return (
