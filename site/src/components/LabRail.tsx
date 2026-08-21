@@ -5,7 +5,7 @@ const LABEL = Object.fromEntries(LAB_TOC.map((item) => [item.id, item.label]))
 export function LabRail({ activeIds }: { activeIds: string[] }) {
   return (
     <aside className="hidden lg:block relative">
-      <div className="sticky top-20 text-[13px] leading-[1.4]">
+      <div className="sticky top-14 text-[13px] leading-[1.4]">
         {LAB_DISCIPLINES.map((group) => {
           const groupOn = group.ids.some((id) => activeIds.includes(id))
           return (

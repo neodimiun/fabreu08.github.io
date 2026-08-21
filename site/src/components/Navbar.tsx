@@ -38,10 +38,10 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5 bg-white/90">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-1.5 sm:py-2 bg-white/90">
         <a
           href="#top"
-          className="relative z-50 inline-flex items-center justify-center min-h-11 min-w-11 text-black hover:opacity-60 transition-opacity"
+          className="relative z-50 inline-flex items-center justify-center text-black hover:opacity-60 transition-opacity"
           aria-label="Home"
           onClick={close}
         >
@@ -54,7 +54,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="relative z-50 flex flex-col items-center justify-center gap-[5px] min-h-11 min-w-11 rounded-md bg-white p-2.5 touch-manipulation"
+          className="relative z-50 flex flex-col items-center justify-center gap-[5px] min-h-9 min-w-9 rounded-md p-1.5 touch-manipulation"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -79,7 +79,7 @@ export function Navbar() {
 
       {open ? (
         <div className="fixed inset-0 z-40 bg-white overflow-y-auto">
-          <div className="min-h-full px-8 sm:px-12 pt-24 pb-16 max-w-xl mx-auto text-center md:max-w-lg md:mx-0 md:ml-auto md:px-16">
+          <div className="min-h-full px-8 sm:px-12 pt-16 pb-16 max-w-xl mx-auto text-center md:max-w-lg md:mx-0 md:ml-auto md:px-16">
             {MENU.map((section) => (
               <div key={section.id} className="mb-10">
                 <a

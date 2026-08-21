@@ -114,7 +114,7 @@ export function Path() {
           </p>
 
           {PATH_ITEMS.map((item) => (
-            <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-20">
+            <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-14">
               <h3
                 className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
               >

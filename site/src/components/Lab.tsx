@@ -99,7 +99,7 @@ export function Lab() {
             Lab Methods
           </h2>
           {LAB_ITEMS.map((item) => (
-            <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-20">
+            <article key={item.id} id={item.id} className="mb-8 last:mb-0 scroll-mt-14">
               <h3
                 className={`text-[16px] sm:text-[18px] font-medium mb-2 text-black ${headingActive(sectionOn && active.includes(item.id))}`}
               >
