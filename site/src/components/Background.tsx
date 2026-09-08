@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { gearX, runwayProgress } from "../runway"
 
-const MASK_SCALE = 0.4
-
-function hoverRadius() {
-  return Math.round(Math.min(420, Math.max(160, window.innerWidth * 0.16)))
-}
+const CALLOUTS = [
+  { id: "bogie", label: "Bogie", at: 0.22, x: 0.78, y: 0.28 },
+  { id: "oleo", label: "Oleo", at: 0.48, x: 0.7, y: 0.48 },
+  { id: "wheel", label: "Wheel", at: 0.72, x: 0.82, y: 0.72 },
+] as const
 
 type Props = {
   runwayId: string
@@ -13,50 +13,76 @@ type Props = {
 
 export function Background({ runwayId }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null)
-  const mouse = useRef({ x: 0, y: 0 })
-  const smooth = useRef({ x: 0, y: 0 })
-  const hovering = useRef(false)
+  const scanRef = useRef<HTMLDivElement>(null)
+  const tickRef = useRef<HTMLDivElement>(null)
+  const calloutRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [reduced, setReduced] = useState(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  )
   const scrollP = useRef(0)
+  const smoothP = useRef(0)
+  const mouse = useRef({ x: 0, y: 0, on: false })
+  const smoothMouse = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const sync = () => setReduced(mq.matches)
+    sync()
+    mq.addEventListener("change", sync)
+    return () => mq.removeEventListener("change", sync)
+  }, [])
+
+  useEffect(() => {
+    if (reduced) return
+
     const wrap = wrapRef.current
+    const scan = scanRef.current
+    const tick = tickRef.current
     const runway = document.getElementById(runwayId)
     const stage = wrap?.parentElement
     if (!wrap || !runway || !stage) return
 
     const canvas = document.createElement("canvas")
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d", { alpha: true })
     if (!ctx) return
 
     const resize = () => {
-      canvas.width = Math.max(1, Math.round(window.innerWidth * MASK_SCALE))
-      canvas.height = Math.max(1, Math.round(window.innerHeight * MASK_SCALE))
+      const dpr = Math.min(1.25, window.devicePixelRatio || 1)
+      canvas.width = Math.max(1, Math.round(window.innerWidth * dpr))
+      canvas.height = Math.max(1, Math.round(window.innerHeight * dpr))
     }
     resize()
 
-    const paintBlob = (sx: number, sy: number, r: number) => {
-      const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r)
-      g.addColorStop(0, "rgba(255,255,255,1)")
-      g.addColorStop(0.4, "rgba(255,255,255,1)")
-      g.addColorStop(0.6, "rgba(255,255,255,0.75)")
-      g.addColorStop(0.75, "rgba(255,255,255,0.4)")
-      g.addColorStop(0.88, "rgba(255,255,255,0.12)")
-      g.addColorStop(1, "rgba(255,255,255,0)")
-      ctx.fillStyle = g
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-    }
+    const hoverR = () => Math.round(Math.min(380, Math.max(140, window.innerWidth * 0.14)))
 
     let raf = 0
+    let lastUrl = ""
+
     const frame = () => {
-      const p = scrollP.current
-      const on = hovering.current
+      const target = scrollP.current
+      smoothP.current += (target - smoothP.current) * 0.14
+      const p = smoothP.current
       const w = canvas.width
       const h = canvas.height
+      const dpr = w / Math.max(1, window.innerWidth)
 
-      if (!on && p < 0.008) {
+      const m = mouse.current
+      const s = smoothMouse.current
+      if (m.on) {
+        s.x += (m.x - s.x) * 0.14
+        s.y += (m.y - s.y) * 0.14
+      }
+
+      if (!m.on && p < 0.01) {
         wrap.style.opacity = "0"
         wrap.style.maskImage = "none"
         wrap.style.webkitMaskImage = "none"
+        if (scan) scan.style.opacity = "0"
+        if (tick) tick.style.opacity = "0"
+        calloutRefs.current.forEach((el) => {
+          if (el) el.style.opacity = "0"
+        })
         raf = requestAnimationFrame(frame)
         return
       }
@@ -64,36 +90,76 @@ export function Background({ runwayId }: Props) {
       wrap.style.opacity = "1"
       ctx.clearRect(0, 0, w, h)
 
-      if (p >= 0.97) {
-        ctx.fillStyle = "rgba(255,255,255,1)"
+      const edge = Math.min(1, Math.max(0, 0.06 + p * 0.88))
+      const y = edge * h
+      const soft = 0.028 + p * 0.018
+
+      if (p >= 0.98) {
+        ctx.fillStyle = "#fff"
         ctx.fillRect(0, 0, w, h)
-      } else if (p > 0.008) {
-        const y = (0.12 + p * 0.8) * h
+      } else if (p > 0.01) {
         const lg = ctx.createLinearGradient(0, 0, 0, h)
-        const edge = y / h
         lg.addColorStop(0, "rgba(255,255,255,1)")
-        lg.addColorStop(Math.max(0, edge - 0.04), "rgba(255,255,255,1)")
-        lg.addColorStop(Math.min(1, edge + 0.14), "rgba(255,255,255,0)")
+        lg.addColorStop(Math.max(0, edge - soft * 0.3), "rgba(255,255,255,1)")
+        lg.addColorStop(Math.min(1, edge + soft), "rgba(255,255,255,0)")
         lg.addColorStop(1, "rgba(255,255,255,0)")
         ctx.fillStyle = lg
         ctx.fillRect(0, 0, w, h)
 
-        const scanR = (hoverRadius() * (1 + p * 1.4)) * MASK_SCALE
-        paintBlob(gearX() * MASK_SCALE, y, scanR)
+        const gx = gearX() * dpr
+        const bloom = hoverR() * dpr * (0.85 + p * 0.55)
+        const g = ctx.createRadialGradient(gx, y, 0, gx, y, bloom)
+        g.addColorStop(0, "rgba(255,255,255,0.95)")
+        g.addColorStop(0.45, "rgba(255,255,255,0.55)")
+        g.addColorStop(0.75, "rgba(255,255,255,0.12)")
+        g.addColorStop(1, "rgba(255,255,255,0)")
+        ctx.globalCompositeOperation = "lighter"
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, w, h)
+        ctx.globalCompositeOperation = "source-over"
       }
 
-      if (on) {
-        const s = smooth.current
-        const m = mouse.current
-        s.x += (m.x - s.x) * 0.1
-        s.y += (m.y - s.y) * 0.1
-        paintBlob(s.x * MASK_SCALE, s.y * MASK_SCALE, hoverRadius() * MASK_SCALE)
+      if (m.on) {
+        const r = hoverR() * dpr
+        const g = ctx.createRadialGradient(s.x * dpr, s.y * dpr, 0, s.x * dpr, s.y * dpr, r)
+        g.addColorStop(0, "rgba(255,255,255,1)")
+        g.addColorStop(0.35, "rgba(255,255,255,0.85)")
+        g.addColorStop(0.65, "rgba(255,255,255,0.28)")
+        g.addColorStop(1, "rgba(255,255,255,0)")
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, w, h)
       }
 
       const url = canvas.toDataURL("image/png")
-      wrap.style.maskImage = `url(${url})`
-      wrap.style.webkitMaskImage = `url(${url})`
-      wrap.style.maskSize = "100% 100%"
+      if (url !== lastUrl) {
+        lastUrl = url
+        wrap.style.maskImage = `url(${url})`
+        wrap.style.webkitMaskImage = `url(${url})`
+        wrap.style.maskSize = "100% 100%"
+        wrap.style.webkitMaskSize = "100% 100%"
+        wrap.style.maskRepeat = "no-repeat"
+        wrap.style.webkitMaskRepeat = "no-repeat"
+      }
+
+      const scanY = edge * 100
+      if (scan) {
+        scan.style.top = `${scanY}%`
+        scan.style.opacity = p > 0.02 && p < 0.98 ? "1" : "0"
+      }
+      if (tick) {
+        tick.style.top = `${scanY}%`
+        tick.style.opacity = p > 0.02 && p < 0.98 ? "0.65" : "0"
+      }
+
+      calloutRefs.current.forEach((el, i) => {
+        if (!el) return
+        const c = CALLOUTS[i]
+        const show = p >= c.at && p < 0.99
+        const fade = show ? Math.min(1, (p - c.at) / 0.08) : 0
+        el.style.opacity = String(fade)
+        el.style.transform = `translateY(${(1 - fade) * 6}px)`
+      })
+
       raf = requestAnimationFrame(frame)
     }
     raf = requestAnimationFrame(frame)
@@ -102,26 +168,18 @@ export function Background({ runwayId }: Props) {
       scrollP.current = runwayProgress(runway)
     }
 
-    const setHover = (clientX: number, clientY: number, active: boolean) => {
-      hovering.current = active
-      mouse.current.x = clientX
-      mouse.current.y = clientY
-      if (active) {
-        smooth.current.x = clientX
-        smooth.current.y = clientY
-      }
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.current = { x: e.clientX, y: e.clientY, on: true }
     }
-
-    const onMouseMove = (e: MouseEvent) => setHover(e.clientX, e.clientY, true)
     const onMouseLeave = () => {
-      hovering.current = false
+      mouse.current.on = false
     }
     const onTouch = (e: TouchEvent) => {
       const t = e.touches[0]
-      if (t) setHover(t.clientX, t.clientY, true)
+      if (t) mouse.current = { x: t.clientX, y: t.clientY, on: true }
     }
     const onTouchEnd = () => {
-      hovering.current = false
+      mouse.current.on = false
     }
     const onResize = () => {
       resize()
@@ -145,9 +203,27 @@ export function Background({ runwayId }: Props) {
       stage.removeEventListener("touchmove", onTouch)
       stage.removeEventListener("touchend", onTouchEnd)
     }
-  }, [runwayId])
+  }, [runwayId, reduced])
 
   const media = (file: string) => `${import.meta.env.BASE_URL}media/${file}`
+
+  if (reduced) {
+    return (
+      <>
+        <div className="hero-reduced" aria-hidden>
+          <figure className="hero-reduced-plate">
+            <img src={media("bg-1.jpg")} alt="" />
+            <figcaption>Optical</figcaption>
+          </figure>
+          <figure className="hero-reduced-plate">
+            <img src={media("bg-2.jpg")} alt="" />
+            <figcaption>Radiograph</figcaption>
+          </figure>
+        </div>
+        <div className="hero-scrim" aria-hidden />
+      </>
+    )
+  }
 
   return (
     <>
@@ -155,7 +231,25 @@ export function Background({ runwayId }: Props) {
       <div ref={wrapRef} className="hero-xray-wrap" aria-hidden>
         <img className="hero-xray" src={media("bg-2.jpg")} alt="" />
       </div>
+      <div ref={scanRef} className="hero-scanline" aria-hidden />
+      <div ref={tickRef} className="hero-dim-ticks" aria-hidden />
       <div className="hero-scrim" aria-hidden />
+      <div className="hero-grain" aria-hidden />
+
+      {CALLOUTS.map((c, i) => (
+        <div
+          key={c.id}
+          ref={(el) => {
+            calloutRefs.current[i] = el
+          }}
+          className="hero-callout"
+          style={{ left: `${c.x * 100}%`, top: `${c.y * 100}%` }}
+          aria-hidden
+        >
+          <span className="hero-callout-tick" />
+          <span className="hero-callout-label">{c.label}</span>
+        </div>
+      ))}
     </>
   )
 }

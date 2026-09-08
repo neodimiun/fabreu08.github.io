@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react"
-import { LAB_TOC, MENU, PATH_TOC, SECTION_IDS } from "../toc"
-import { useScrollActive, useScrollCurrent } from "../hooks/useScrollCurrent"
-
-const PATH_IDS = PATH_TOC.map((item) => item.id)
-const LAB_IDS = LAB_TOC.map((item) => item.id)
+import { MENU, SECTION_IDS } from "../toc"
+import { useScrollCurrent } from "../hooks/useScrollCurrent"
 
 const itemClass = "menu-link"
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const currentSection = useScrollCurrent(SECTION_IDS)
-  const pathActive = useScrollActive(PATH_IDS)
-  const labActive = useScrollActive(LAB_IDS)
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
@@ -30,15 +25,9 @@ export function Navbar() {
 
   const close = () => setOpen(false)
 
-  const childActive = (sectionId: string, childId: string) => {
-    if (sectionId === "path") return pathActive.includes(childId)
-    if (sectionId === "lab") return labActive.includes(childId)
-    return false
-  }
-
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-1.5 sm:py-2 bg-white/90">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-8 py-1.5 sm:py-2 bg-[color:var(--nav-bg)] backdrop-blur-sm">
         <a
           href="#top"
           className="relative z-50 inline-flex items-center justify-center text-black hover:opacity-60 transition-opacity"
@@ -52,9 +41,26 @@ export function Navbar() {
           />
         </a>
 
+        <ul className="hidden md:flex items-center gap-6 text-[13px] tracking-[0.04em]">
+          {MENU.map((section) => (
+            <li key={section.id}>
+              <a
+                href={section.href}
+                className={`${itemClass} ${
+                  currentSection === section.id
+                    ? "underline underline-offset-4 decoration-1"
+                    : "text-black/70 hover:text-black"
+                }`}
+              >
+                {section.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
         <button
           type="button"
-          className="relative z-50 flex flex-col items-center justify-center gap-[5px] min-h-9 min-w-9 rounded-md p-1.5 touch-manipulation"
+          className="relative z-50 flex md:hidden flex-col items-center justify-center gap-[5px] min-h-9 min-w-9 rounded-md p-1.5 touch-manipulation"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -78,38 +84,21 @@ export function Navbar() {
       </nav>
 
       {open ? (
-        <div className="fixed inset-0 z-40 bg-white overflow-y-auto">
-          <div className="min-h-full px-8 sm:px-12 pt-16 pb-16 max-w-xl mx-auto text-center md:max-w-lg md:mx-0 md:ml-auto md:px-16">
+        <div className="fixed inset-0 z-40 bg-[color:var(--paper)] overflow-y-auto md:hidden">
+          <div className="min-h-full px-8 pt-20 pb-16 max-w-xl mx-auto text-center">
             {MENU.map((section) => (
-              <div key={section.id} className="mb-10">
+              <div key={section.id} className="mb-8">
                 <a
                   href={section.href}
                   onClick={close}
-                  className={`${itemClass} text-[28px] sm:text-[32px] mb-3 ${
-                    currentSection === section.id ? "underline underline-offset-4 decoration-1" : ""
+                  className={`${itemClass} text-[28px] ${
+                    currentSection === section.id
+                      ? "underline underline-offset-4 decoration-1"
+                      : ""
                   }`}
                 >
                   {section.label}
                 </a>
-                {section.children.length > 0 ? (
-                  <ul className="space-y-2 mt-3">
-                    {section.children.map((child) => (
-                      <li key={child.id}>
-                        <a
-                          href={child.href}
-                          onClick={close}
-                          className={`${itemClass} text-[16px] sm:text-[17px] ${
-                            childActive(section.id, child.id)
-                              ? "text-black underline underline-offset-4 decoration-1"
-                              : "text-black/70"
-                          }`}
-                        >
-                          {child.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
               </div>
             ))}
           </div>

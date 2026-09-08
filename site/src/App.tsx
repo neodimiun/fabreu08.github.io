@@ -1,8 +1,6 @@
 import { Navbar } from "./components/Navbar"
 import { Hero } from "./components/Hero"
-import { Path } from "./components/Path"
-import { Lab } from "./components/Lab"
-import { Credentials } from "./components/Credentials"
+import { Stations } from "./components/Stations"
 import { Footer } from "./components/Footer"
 
 export default function App() {
@@ -10,9 +8,7 @@ export default function App() {
     <>
       <Navbar />
       <Hero />
-      <Path />
-      <Lab />
-      <Credentials />
+      <Stations />
       <Footer />
     </>
   )
