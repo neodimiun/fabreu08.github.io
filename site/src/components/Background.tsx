@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react"
 import { gearX, runwayProgress } from "../runway"
 
 const CALLOUTS = [
-  { id: "bogie", label: "Bogie", at: 0.22, x: 0.78, y: 0.28 },
-  { id: "oleo", label: "Oleo", at: 0.48, x: 0.7, y: 0.48 },
-  { id: "wheel", label: "Wheel", at: 0.72, x: 0.82, y: 0.72 },
+  { id: "oleo", label: "Oleo", at: 0.32, x: 0.68, y: 0.38 },
+  { id: "bogie", label: "Bogie", at: 0.52, x: 0.74, y: 0.66 },
+  { id: "wheel", label: "Wheel", at: 0.70, x: 0.78, y: 0.84 },
 ] as const
 
 type Props = {
@@ -24,6 +24,7 @@ export function Background({ runwayId }: Props) {
   const smoothP = useRef(0)
   const mouse = useRef({ x: 0, y: 0, on: false })
   const smoothMouse = useRef({ x: 0, y: 0 })
+  const visible = useRef(true)
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -59,7 +60,21 @@ export function Background({ runwayId }: Props) {
     let raf = 0
     let lastUrl = ""
 
+    const shouldRun = () => visible.current || mouse.current.on
+
+    const stopRaf = () => {
+      if (raf) {
+        cancelAnimationFrame(raf)
+        raf = 0
+      }
+    }
+
     const frame = () => {
+      if (!shouldRun()) {
+        raf = 0
+        return
+      }
+
       const target = scrollP.current
       smoothP.current += (target - smoothP.current) * 0.14
       const p = smoothP.current
@@ -142,13 +157,15 @@ export function Background({ runwayId }: Props) {
       }
 
       const scanY = edge * 100
+      const short = window.innerHeight < 700
+      const scanActive = p > 0.02 && p < 0.98
       if (scan) {
         scan.style.top = `${scanY}%`
-        scan.style.opacity = p > 0.02 && p < 0.98 ? "1" : "0"
+        scan.style.opacity = scanActive ? (short ? "0.45" : "1") : "0"
       }
       if (tick) {
         tick.style.top = `${scanY}%`
-        tick.style.opacity = p > 0.02 && p < 0.98 ? "0.65" : "0"
+        tick.style.opacity = scanActive ? (short ? "0.4" : "0.65") : "0"
       }
 
       calloutRefs.current.forEach((el, i) => {
@@ -162,7 +179,10 @@ export function Background({ runwayId }: Props) {
 
       raf = requestAnimationFrame(frame)
     }
-    raf = requestAnimationFrame(frame)
+
+    const startRaf = () => {
+      if (!raf && shouldRun()) raf = requestAnimationFrame(frame)
+    }
 
     const readScroll = () => {
       scrollP.current = runwayProgress(runway)
@@ -170,21 +190,46 @@ export function Background({ runwayId }: Props) {
 
     const onMouseMove = (e: MouseEvent) => {
       mouse.current = { x: e.clientX, y: e.clientY, on: true }
+      startRaf()
     }
     const onMouseLeave = () => {
       mouse.current.on = false
+      if (!visible.current) stopRaf()
     }
     const onTouch = (e: TouchEvent) => {
       const t = e.touches[0]
-      if (t) mouse.current = { x: t.clientX, y: t.clientY, on: true }
+      if (t) {
+        mouse.current = { x: t.clientX, y: t.clientY, on: true }
+        startRaf()
+      }
     }
     const onTouchEnd = () => {
       mouse.current.on = false
+      if (!visible.current) stopRaf()
     }
     const onResize = () => {
       resize()
       readScroll()
     }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const was = visible.current
+        visible.current = !!entry?.isIntersecting
+        if (visible.current) {
+          readScroll()
+          startRaf()
+        } else if (!mouse.current.on) {
+          stopRaf()
+        }
+        if (!was && visible.current) {
+          readScroll()
+          startRaf()
+        }
+      },
+      { threshold: 0.05 },
+    )
+    io.observe(stage)
 
     window.addEventListener("scroll", readScroll, { passive: true })
     window.addEventListener("resize", onResize)
@@ -193,9 +238,11 @@ export function Background({ runwayId }: Props) {
     stage.addEventListener("touchmove", onTouch, { passive: true })
     stage.addEventListener("touchend", onTouchEnd)
     readScroll()
+    startRaf()
 
     return () => {
-      cancelAnimationFrame(raf)
+      stopRaf()
+      io.disconnect()
       window.removeEventListener("scroll", readScroll)
       window.removeEventListener("resize", onResize)
       stage.removeEventListener("mousemove", onMouseMove)

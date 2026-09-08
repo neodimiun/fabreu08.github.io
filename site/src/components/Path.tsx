@@ -74,9 +74,18 @@ function railYear(title: string, meta: string) {
   return yearFromMeta(meta)
 }
 
-const PATH_ITEMS = [
-  ...ENTRIES.map((entry, i) => ({
-    id: `path-${i}`,
+const FOUNDATION = ENTRIES.slice(0, 4).map((entry, i) => ({
+  id: `path-${i}`,
+  label: railLabel(entry.title),
+  year: railYear(entry.title, entry.meta),
+  title: entry.title,
+  meta: entry.meta,
+  body: entry.body,
+}))
+
+const MAIN = [
+  ...ENTRIES.slice(4).map((entry, i) => ({
+    id: `path-${i + 4}`,
     label: railLabel(entry.title),
     year: railYear(entry.title, entry.meta),
     title: entry.title,
@@ -93,7 +102,12 @@ const PATH_ITEMS = [
   },
 ]
 
-const PATH_IDS = PATH_ITEMS.map((item) => item.id)
+const RAIL_ITEMS = [
+  { id: "path-foundation", label: "Foundation", year: "2008–2018" },
+  ...MAIN.map(({ id, label, year }) => ({ id, label, year })),
+]
+
+const PATH_IDS = RAIL_ITEMS.map((item) => item.id)
 
 export function Path() {
   const active = useScrollActive(PATH_IDS)
@@ -113,7 +127,38 @@ export function Path() {
             Every move was made to acquire something specific: a class of methods, a regulatory system, a different kind of accountability. Each one made the next possible.
           </p>
 
-          {PATH_ITEMS.map((item) => (
+          <div
+            id="path-foundation"
+            className="path-foundation py-8 border-t border-black/15 scroll-mt-14"
+          >
+            <h3
+              className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes("path-foundation"))}`}
+            >
+              Foundation
+            </h3>
+            <p className="text-[14px] sm:text-[15px] text-black/55 mb-4">2008–2018</p>
+            <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mb-4">
+              The first decade was foundation: IT support that paid for school, stacked biotech credentials at Miami Dade, a commercial lab with the longest method list under one roof, and a UF master&apos;s completed while working. Those years taught systems thinking, bench discipline, and the habit of writing a result that could be defended a year later.
+            </p>
+            <details>
+              <summary>Show foundation details</summary>
+              <div className="mt-4">
+                {FOUNDATION.map((item) => (
+                  <article key={item.id} id={item.id} className="py-6 border-t border-black/10 first:border-t-0 scroll-mt-14">
+                    <h4 className="text-[16px] sm:text-[18px] mb-1 text-black leading-[1.35]">
+                      {item.title}
+                    </h4>
+                    {item.meta ? (
+                      <p className="text-[13px] sm:text-[14px] text-black/55 mb-3">{item.meta}</p>
+                    ) : null}
+                    <p className="text-[15px] sm:text-[17px] leading-[1.65] text-black">{item.body}</p>
+                  </article>
+                ))}
+              </div>
+            </details>
+          </div>
+
+          {MAIN.map((item) => (
             <article key={item.id} id={item.id} className="py-8 border-t border-black/15 scroll-mt-14">
               <h3
                 className={`text-[18px] sm:text-[22px] mb-1 text-black leading-[1.35] ${headingActive(sectionOn && active.includes(item.id))}`}
@@ -129,7 +174,7 @@ export function Path() {
             </article>
           ))}
         </div>
-        <PathTimeline items={PATH_ITEMS} activeIds={sectionOn ? active : []} />
+        <PathTimeline items={RAIL_ITEMS} activeIds={sectionOn ? active : []} />
       </div>
     </section>
   )

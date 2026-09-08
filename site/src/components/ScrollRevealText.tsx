@@ -4,9 +4,10 @@ import { runwayProgress } from "../runway"
 type Props = {
   text: string
   runwayId: string
+  startAt?: number
 }
 
-export function ScrollRevealText({ text, runwayId }: Props) {
+export function ScrollRevealText({ text, runwayId, startAt = 0.5 }: Props) {
   const visibleRef = useRef<HTMLSpanElement>(null)
   const cursorRef = useRef<HTMLSpanElement>(null)
 
@@ -17,16 +18,45 @@ export function ScrollRevealText({ text, runwayId }: Props) {
     if (!visible || !cursor || !runway) return
 
     let raf = 0
+    let intersecting = true
+    const denom = Math.max(1e-6, 1 - startAt)
+
     const tick = () => {
+      if (!intersecting) {
+        raf = 0
+        return
+      }
       const p = runwayProgress(runway)
-      const count = Math.min(text.length, Math.max(0, Math.round(p * text.length)))
+      const t = Math.min(1, Math.max(0, (p - startAt) / denom))
+      const count = Math.min(text.length, Math.max(0, Math.round(t * text.length)))
       visible.textContent = text.slice(0, count)
       cursor.style.display = count >= text.length ? "none" : "inline-block"
       raf = requestAnimationFrame(tick)
     }
-    raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
-  }, [runwayId, text])
+
+    const start = () => {
+      if (!raf) raf = requestAnimationFrame(tick)
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        intersecting = !!entry?.isIntersecting
+        if (intersecting) start()
+        else if (raf) {
+          cancelAnimationFrame(raf)
+          raf = 0
+        }
+      },
+      { threshold: 0.05 },
+    )
+    io.observe(runway)
+    start()
+
+    return () => {
+      io.disconnect()
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [runwayId, text, startAt])
 
   return (
     <p

@@ -30,7 +30,7 @@ export function Hero() {
               >
                 M.S. Microbiology &amp; Cell Science, University of Florida
               </p>
-              <ScrollRevealText text={OPENING} runwayId="hero-runway" />
+              <ScrollRevealText text={OPENING} runwayId="hero-runway" startAt={0.5} />
             </div>
           </div>
         </div>

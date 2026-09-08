@@ -3,12 +3,9 @@ import { SECTION_IDS } from "../toc"
 import { useScrollCurrent } from "../hooks/useScrollCurrent"
 
 const ITEMS = [
-  "M.S. Microbiology & Cell Science, University of Florida, 2018. Medical Microbiology & Biochemistry, GPA 3.90.",
-  "B.S. Biological Sciences (Biotechnology), Miami Dade College, 2015. Highest Honors, upper-division GPA 4.0.",
-  "A.S. Biotechnology and College Credit Certificate, Biotechnology, Miami Dade College, 2013. Highest Honors.",
-  "A.A., Miami Dade College, 2012. Highest Honors.",
-  "Golden Key, Phi Theta Kappa, National Society of Leadership and Success.",
-  "North Dade Medical Foundation Scholarship (four times), Dean's List, STEM Ambassador.",
+  "M.S. Microbiology & Cell Science, University of Florida, 2018",
+  "B.S. Biological Sciences (Biotechnology), Miami Dade College, 2015",
+  "English / Español — native fluency in both",
 ]
 
 export function Credentials() {
@@ -19,21 +16,18 @@ export function Credentials() {
       id="credentials"
       className="relative z-[2] bg-white px-[1.125rem] sm:px-[1.8rem] md:px-[2.25rem] pt-16 pb-20 sm:pt-20 sm:pb-24"
     >
-      <div className="max-w-[1200px] mx-auto text-center">
+      <div className="max-w-[1200px] mx-auto">
         <h2
           className={`mb-8 text-[22px] sm:text-[28px] text-black tracking-tight ${headingActive(sectionOn)}`}
           style={{ fontFamily: "var(--font-heading)", fontWeight: 400 }}
         >
           Credentials
         </h2>
-        <ul className="text-[16px] sm:text-[18px] leading-[1.65] text-black list-none space-y-3 lg:whitespace-nowrap">
+        <ul className="text-[16px] sm:text-[18px] leading-[1.65] text-black list-none space-y-3">
           {ITEMS.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
-        <p className="text-[16px] sm:text-[18px] leading-[1.65] text-black mt-8">
-          English and Spanish, native fluency in both.
-        </p>
       </div>
     </section>
   )
